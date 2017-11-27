@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AudioFileTypes" xml:space="preserve">
+    <value>Audio file types</value>
+  </data>
+  <data name="BrowseDestination" xml:space="preserve">
+    <value>Browse destination</value>
+  </data>
+  <data name="BrowseSource" xml:space="preserve">
+    <value>Browse source</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="DestinationPath" xml:space="preserve">
+    <value>Destination path</value>
+  </data>
+  <data name="FindFiles" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchSubDirectories" xml:space="preserve">
+    <value>Search in subdirectories</value>
+  </data>
+  <data name="IncludeSubtitles" xml:space="preserve">
+    <value>Include subtitles</value>
+  </data>
+  <data name="IncorrectDirectory" xml:space="preserve">
+    <value>Incorrect directory, the directory should exist and must be well formed</value>
+  </data>
+  <data name="IncorrectDoubleFormat" xml:space="preserve">
+    <value>Incorrect format, this field should only contain numeric data</value>
+  </data>
+  <data name="SourcePath" xml:space="preserve">
+    <value>Source path</value>
+  </data>
+  <data name="StartCopy" xml:space="preserve">
+    <value>Start Copy</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Random File Copier</value>
+  </data>
+  <data name="VideoFileTypes" xml:space="preserve">
+    <value>Video file types</value>
+  </data>
+  <data name="IsSelected" xml:space="preserve">
+    <value>Selected</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="SizeInMB" xml:space="preserve">
+    <value>Size in MB</value>
+  </data>
+  <data name="SizeInGB" xml:space="preserve">
+    <value>Size in GB</value>
+  </data>
+  <data name="SubtitlePath" xml:space="preserve">
+    <value>Subtitle Path</value>
+  </data>
+  <data name="TotalFilesFound" xml:space="preserve">
+    <value>Number of files found: {0}</value>
+  </data>
+  <data name="TotalFilesSelected" xml:space="preserve">
+    <value>Number of files selected: {0}</value>
+  </data>
+  <data name="TotalSelectedSize" xml:space="preserve">
+    <value>Total selected filesize: {0:F2} GB</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="SomethingWentWrong" xml:space="preserve">
+    <value>Woops! Something went wrong...</value>
+  </data>
+  <data name="OnlyVideosWithSubtitles" xml:space="preserve">
+    <value>Only videos with subtitles</value>
+  </data>
+  <data name="FolderFileTypes" xml:space="preserve">
+    <value>Folders</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProcessingFiles" xml:space="preserve">
+    <value>Copying {0}/{1}</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>Open Folder in File Explorer</value>
+  </data>
+  <data name="SearchOptions" xml:space="preserve">
+    <value>Search options</value>
+  </data>
+  <data name="SelectionOptions" xml:space="preserve">
+    <value>Selection options</value>
+  </data>
+  <data name="MaximumFileSize" xml:space="preserve">
+    <value>Maximum ({0})</value>
+  </data>
+  <data name="MinimumFileSize" xml:space="preserve">
+    <value>Minimum ({0})</value>
+  </data>
+  <data name="NoCopiedFileListFileWritten" xml:space="preserve">
+    <value>Could not write/update the file that keeps track of previous copied files!</value>
+  </data>
+  <data name="GB" xml:space="preserve">
+    <value>GB</value>
+  </data>
+  <data name="MB" xml:space="preserve">
+    <value>MB</value>
+  </data>
+  <data name="AvoidPreviousCopied" xml:space="preserve">
+    <value>Avoid previous copied</value>
+  </data>
+  <data name="AvoidPreviousCopiedTooltip" xml:space="preserve">
+    <value>This will only work when there were previous copied files copied with this program and whilst the file containing the copied filenames has not been deleted</value>
+  </data>
+  <data name="PleaseWait" xml:space="preserve">
+    <value>Please wait....</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>All files have been sucessfully copied!</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="SomeFilesHaveNotBeenCopied" xml:space="preserve">
+    <value>Some files have not been copied! Make sure the device has not been removed and that the program is being run with the right permission.</value>
+  </data>
+</root>
