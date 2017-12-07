@@ -15,9 +15,14 @@ Start Random File Copier
 
 # Screenshots
 ![Video](/../screenshots/application/Video.PNG?raw=true)
+
 ![Audio](/../screenshots/application/Audio.PNG?raw=true)
 
 # Installation
+* ~~Download the installer~~
+* ~~Install the program using the installer~~
+* ~~If you get a Smartscreen Filter notification click More Info and then Run anyway as seen on the images below. (This program is open source and non malicious, the source code can be checked in this repo!)~~
+
 ![Smartscreen1](/../screenshots/installation/Smartscreencutted.PNG?raw=true)
 ![Smartscreen2](/../screenshots/installation/Smartscreen2Cutted.PNG?raw=true)
 
