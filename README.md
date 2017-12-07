@@ -14,8 +14,10 @@ Start Random File Copier
 * Enjoy your copied Video/Audio/Folders!
 
 # Screenshots
-work in progress
+![Video](/../screenshots/application/Video.png?raw=true)
+![Audio](/../screenshots/application/Audio.png?raw=true)
 
 # Installation
-work in progress
+![Smartscreen1](/../screenshots/installation/Smartscreencutted.png?raw=true)
+![Smartscreen2](/../screenshots/installation/Smartscreen2Cutted.png?raw=true)
 
