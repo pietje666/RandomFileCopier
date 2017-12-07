@@ -18,6 +18,6 @@ Start Random File Copier
 ![Audio](/../screenshots/application/Audio.png?raw=true)
 
 # Installation
-![Smartscreen1](/../screenshots/installation/Smartscreencutted.png?raw=true)
-![Smartscreen2](/../screenshots/installation/Smartscreen2Cutted.png?raw=true)
+![Smartscreen1](../screenshots/installation/Smartscreencutted.png?raw=true)
+![Smartscreen2](../screenshots/installation/Smartscreen2Cutted.png?raw=true)
 
