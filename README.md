@@ -14,10 +14,10 @@ Start Random File Copier
 * Enjoy your copied Video/Audio/Folders!
 
 # Screenshots
-![Video](/screenshots/application/Video.png?raw=true)
-![Audio](/screenshots/application/Audio.png?raw=true)
+![Video](/../screenshots/application/Video.PNG?raw=true)
+![Audio](/../screenshots/application/Audio.PNG?raw=true)
 
 # Installation
-![Smartscreen1](/screenshots/installation/Smartscreencutted.png?raw=true)
-![Smartscreen2](/screenshots/installation/Smartscreen2Cutted.png?raw=true)
+![Smartscreen1](/../screenshots/installation/Smartscreencutted.PNG?raw=true)
+![Smartscreen2](/../screenshots/installation/Smartscreen2Cutted.PNG?raw=true)
 
