@@ -19,9 +19,10 @@ Start Random File Copier
 ![Audio](/../screenshots/application/Audio.PNG?raw=true)
 
 # Installation
-* ~~Download the installer~~
-* ~~Install the program using the installer~~
-* ~~If you get a Smartscreen Filter notification click More Info and then Run anyway as seen on the images below. (This program is open source and non malicious, the source code can be checked in this repo!)~~
+* Navigate to the releases link on top of the page
+* Download the RandomFileCopier.msi installer
+* Install the program using the installer
+* If you get a Smartscreen Filter notification click More Info and then Run anyway as seen on the images below. (This program is open source and non malicious, the source code can be checked in this repo!)
 
 ![Smartscreen1](/../screenshots/installation/Smartscreencutted.PNG?raw=true)
 ![Smartscreen2](/../screenshots/installation/Smartscreen2Cutted.PNG?raw=true)
