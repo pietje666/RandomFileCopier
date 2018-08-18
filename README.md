@@ -14,9 +14,9 @@ Start Random File Copier
 * Enjoy your copied Video/Audio/Folders!
 
 # Screenshots
-![Video](/../screenshots/application/Video.PNG?raw=true)
+![Video](/../gh-pages/assets/application/Video.PNG?raw=true)
 
-![Audio](/../screenshots/application/Audio.PNG?raw=true)
+![Audio](/../gh-pages/assets/application/Audio.PNG?raw=true)
 
 # Installation
 * Navigate to the releases link on top of the page
@@ -24,6 +24,6 @@ Start Random File Copier
 * Install the program using the installer
 * If you get a Smartscreen Filter notification click More Info and then Run anyway as seen on the images below. (This program is open source and non malicious, the source code can be checked in this repo!)
 
-![Smartscreen1](/../screenshots/installation/Smartscreencutted.PNG?raw=true)
-![Smartscreen2](/../screenshots/installation/Smartscreen2Cutted.PNG?raw=true)
+![Smartscreen1](/../gh-pages/assets/installation/Smartscreencutted.PNG?raw=true)
+![Smartscreen2](/../gh-pages/assets/installation/Smartscreen2Cutted.PNG?raw=true)
 
