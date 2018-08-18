@@ -14,15 +14,15 @@ Start Random File Copier
 * Enjoy your copied Video/Audio/Folders!
 
 # Screenshots
-![Video](application/Video.PNG?raw=true)
+![Video](assets/application/Video.PNG?raw=true)
 
-![Audio](application/Audio.PNG?raw=true)
+![Audio](assets/application/Audio.PNG?raw=true)
 
 # Installation
 * Download the latest RandomFileCopier.msi installer on the right side of the page
 * Install the program using the installer
 * If you get a Smartscreen Filter notification click More Info and then Run anyway as seen on the images below. (This program is open source and non malicious, the source code can be checked in this repo!)
 
-![Smartscreen1](installation/Smartscreencutted.PNG?raw=true)
-![Smartscreen2](installation/Smartscreen2Cutted.PNG?raw=true)
+![Smartscreen1](assets/installation/Smartscreencutted.PNG?raw=true)
+![Smartscreen2](assets/installation/Smartscreen2Cutted.PNG?raw=true)
 
