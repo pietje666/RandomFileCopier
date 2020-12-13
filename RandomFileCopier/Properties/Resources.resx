@@ -232,7 +232,7 @@
     <value>Avoid previous copied</value>
   </data>
   <data name="AvoidPreviousCopiedTooltip" xml:space="preserve">
-    <value>This will only work when there were previous copied files copied with this program and whilst the file containing the copied filenames has not been deleted</value>
+    <value>This will only work when there were previous copied files copied with this program and whilst the file containing the copied file names has not been deleted</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
     <value>Please wait....</value>

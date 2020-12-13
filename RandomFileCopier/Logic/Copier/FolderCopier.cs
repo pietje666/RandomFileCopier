@@ -8,6 +8,7 @@ namespace RandomFileCopier.Logic.Copier
     {
         private readonly IFileCopier _fileCopier;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public FolderCopier(IFileCopier fileCopier)
         {
             _fileCopier = fileCopier ?? new FileCopier();

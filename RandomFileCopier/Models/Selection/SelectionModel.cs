@@ -14,6 +14,7 @@ namespace RandomFileCopier.Models.Selection.Base
     {
         private readonly UnitSize _unitSize;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification ="RaisepropertyChanged not overriden")]
         public SelectionModel(double minimumFileSize, double maximumFileSize, UnitSize unitSize)
         {
@@ -38,6 +39,7 @@ namespace RandomFileCopier.Models.Selection.Base
 
         private double _minimumFileSize;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public double MinimumFileSize
         {
             get { return _minimumFileSize; }
@@ -51,6 +53,7 @@ namespace RandomFileCopier.Models.Selection.Base
 
         private double _maximumFileSize;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public double MaximumFileSize
         {
             get { return _maximumFileSize; }
@@ -64,6 +67,7 @@ namespace RandomFileCopier.Models.Selection.Base
 
         private long _minimumFileSizeInBytes;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public long MinimumFileSizeInBytes
         {
             get { return _minimumFileSizeInBytes; }
@@ -72,6 +76,7 @@ namespace RandomFileCopier.Models.Selection.Base
 
         private long _maximumFileSizeInBytes;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public long MaximumFileSizeInBytes
         {
             get { return _maximumFileSizeInBytes; }
@@ -80,12 +85,14 @@ namespace RandomFileCopier.Models.Selection.Base
 
         private bool _avoidPreviousCopied;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public bool AvoidPreviousCopied
         {
             get { return _avoidPreviousCopied; }
             set { _avoidPreviousCopied = value; RaisePropertyChanged(); }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         private long CalculateSizeInBytes(double size)
         {
             long sizeInBytes = 0;

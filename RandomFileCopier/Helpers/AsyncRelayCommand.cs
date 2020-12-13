@@ -36,6 +36,7 @@ namespace RandomFileCopier.Helpers
 
         public event EventHandler CanExecuteChanged;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate")]
         public void RaiseCanExecuteChanged()
         {
             if (CanExecuteChanged != null)
@@ -45,18 +46,18 @@ namespace RandomFileCopier.Helpers
         }
     }
 
-    public sealed class AsyncRelayCommand<TParam>
+    public sealed class AsyncRelayCommand<TParameter>
         : ICommand
     {
-        private readonly Func<TParam, Task> _asyncAction;
-        private readonly Func<TParam, bool> _canExecute;
+        private readonly Func<TParameter, Task> _asyncAction;
+        private readonly Func<TParameter, bool> _canExecute;
 
-        public AsyncRelayCommand(Func<TParam, Task> asyncAction)
+        public AsyncRelayCommand(Func<TParameter, Task> asyncAction)
             : this(asyncAction, null)
         {
         }
 
-        public AsyncRelayCommand(Func<TParam, Task> asyncAction, Func<TParam, bool> canExecute)
+        public AsyncRelayCommand(Func<TParameter, Task> asyncAction, Func<TParameter, bool> canExecute)
         {
             _asyncAction = asyncAction;
             _canExecute = canExecute;
@@ -64,15 +65,15 @@ namespace RandomFileCopier.Helpers
 
         bool ICommand.CanExecute(object parameter)
         {
-            var isTypedParam = parameter is TParam;
+            var isTypedParam = parameter is TParameter;
 
             if (isTypedParam)
             {
-                return _canExecute == null || _canExecute((TParam)parameter);
+                return _canExecute == null || _canExecute((TParameter)parameter);
             }
             else
             {
-                return _canExecute == null || _canExecute(default(TParam));
+                return _canExecute == null || _canExecute(default(TParameter));
             }
         }
 
@@ -80,13 +81,14 @@ namespace RandomFileCopier.Helpers
         {
             if (_asyncAction != null && ((ICommand)this).CanExecute(parameter))
             {
-                var typedParam = (TParam)parameter;
+                var typedParam = (TParameter)parameter;
 
                 await _asyncAction(typedParam);
             }
         }
 
         public event EventHandler CanExecuteChanged;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate")]
         public void RaiseCanExecuteChanged()
         {
             if (CanExecuteChanged != null)

@@ -20,6 +20,7 @@ namespace RandomFileCopier.ViewModel
     {
         private readonly IRandomAudioFileSelector _randomAudioFileSelector;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public AudioCopyViewModel(IFileSearcher fileSearcher,  IDispatcherWrapper dispatcher, IRandomAudioFileSelector randomFileSelector, ISerializationHelper serializationHelper, IDialogService dialogService, IOpenerHelper openerHelper, IConfigurationHelper configurationHelper)
             : base(fileSearcher ?? new FileSearcher(), dispatcher ?? new DispatcherWrapper(), serializationHelper ?? new SerializationHelper(), dialogService ?? new DialogService(), openerHelper ?? new OpenerHelper(), configurationHelper ?? new ConfigurationHelper())
         {

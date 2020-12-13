@@ -13,6 +13,7 @@ namespace RandomFileCopier.Behaviors
     /// <see href="http://stackoverflow.com/users/718325/jason">Jason</see> to
     /// <see href="http://stackoverflow.com/questions/1600218/how-can-i-move-a-wpf-popup-when-its-anchor-element-moves">this</see> question.
     /// </remarks>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification ="instantiated from xaml")]
     internal class RepositionPopupBehavior : Behavior<Popup>
     {
         #region Protected Methods

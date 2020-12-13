@@ -16,6 +16,7 @@ namespace RandomFileCopier.Models
 
         public string Name { get; set; }
         public long Size { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public DateTime CopiedDatetime { get; set; }
     }
 }

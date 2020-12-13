@@ -141,7 +141,7 @@
                                 <StackPanel>
                                     <Expander Header="{x:Static resx:Resources.SearchOptions}">
                                     <StackPanel>
-                                            <extendedToolkit:CheckComboBox SelectedItemsOverride="{Binding Model.SelectedExtensions}" ItemsSource="{Binding Extensions}"/>
+                                            <extendedToolkit:CheckComboBox SelectedItemsOverride="{Binding Model.SelectedExtensions, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Extensions}"/>
                                             <CheckBox Content="{x:Static resx:Resources.IncludeSubtitles}" IsChecked="{Binding Model.IncludeSubtitles}"/>
                                             <CheckBox Content="{x:Static resx:Resources.SearchSubDirectories}" IsChecked="{Binding Model.IncludeSubDirectories}"/>
                                         </StackPanel>
@@ -165,7 +165,7 @@
                                 <StackPanel>
                                     <Expander Header="{x:Static resx:Resources.SearchOptions}">
                                         <StackPanel>
-                                            <extendedToolkit:CheckComboBox ItemsSource="{Binding Extensions}" SelectedItemsOverride="{Binding Model.SelectedExtensions}"/>
+                                            <extendedToolkit:CheckComboBox ItemsSource="{Binding Extensions}" SelectedItemsOverride="{Binding Model.SelectedExtensions, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="{x:Static resx:Resources.SearchSubDirectories}" IsChecked="{Binding Model.IncludeSubDirectories}"/>
                                         </StackPanel>
                                     </Expander>

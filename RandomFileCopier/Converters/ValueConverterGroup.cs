@@ -5,6 +5,7 @@ using System.Windows.Data;
 
 namespace RandomFileCopier.Converters
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix" ,Justification ="ok naming")]
     public class ValueConverterGroup : List<IValueConverter>, IValueConverter
     {
         #region IValueConverter Members

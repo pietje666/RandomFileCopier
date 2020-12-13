@@ -48,6 +48,7 @@ namespace RandomFileCopier.Models
 
         private double _sizeInMB;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public double SizeInMB
         {
             get { return _sizeInMB; }

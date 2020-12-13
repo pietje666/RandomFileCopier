@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace RandomFileCopier.Helpers
 {
-    class NativeMethods
+    static class NativeMethods
     {
         // Pinvoke for API function
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, ThrowOnUnmappableChar =true)]
@@ -21,7 +21,7 @@ namespace RandomFileCopier.Helpers
                 throw new ArgumentNullException("folderName");
             }
 
-            if (!folderName.EndsWith("\\"))
+            if (!folderName.EndsWith("\\", StringComparison.OrdinalIgnoreCase))
             {
                 folderName += '\\';
             }

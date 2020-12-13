@@ -55,7 +55,11 @@ namespace RandomFileCopier.ViewModel.Base
         private void SetCommands()
         {
 
-            BrowseSourceCommand = new RelayCommand(() => Model.SourcePath = _openerHelper.OpenDestinationFileDialog(true));
+            BrowseSourceCommand = new RelayCommand(() =>
+            {
+                Model.RaisePropertyChanged(nameof(Model.SelectedExtensions));
+                Model.SourcePath = _openerHelper.OpenDestinationFileDialog(true);
+            });
             BrowseDestinationCommand = new RelayCommand(() => Model.DestinationPath = _openerHelper.OpenDestinationFileDialog());
             CopyCommand = new AsyncRelayCommand(CopyAsync, () => !IsBusySearching && Model.Items.Any(x => x.IsSelected) && TotalSelectedSize < SelectionModel.SelectedSize);
             FindFilesCommand = new AsyncRelayCommand(FindFilesAsync, CanFindFiles);
@@ -220,7 +224,7 @@ namespace RandomFileCopier.ViewModel.Base
             });
         }
 
-        private void BackupExtensions()
+        protected void BackupExtensions()
         {
             _selectedExtensionsBackup = new List<string>(Model.SelectedExtensions);
         }
@@ -236,6 +240,8 @@ namespace RandomFileCopier.ViewModel.Base
                     Model.SelectedExtensions.Add(item);
                 }
             }
+
+            Model.RaisePropertyChanged(nameof(Model.SelectedExtensions));
         }
 
         private bool CanFindFiles()
@@ -313,7 +319,6 @@ namespace RandomFileCopier.ViewModel.Base
 
         private void SelectionModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var propertyName = e.PropertyName;
             OnSelectionModelPropertyChanged(sender, e);
         }
 

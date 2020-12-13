@@ -19,7 +19,7 @@ namespace RandomFileCopier.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -79,7 +79,7 @@ namespace RandomFileCopier.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This will only work when there were previous copied files copied with this program and whilst the file containing the copied filenames has not been deleted.
+        ///   Looks up a localized string similar to This will only work when there were previous copied files copied with this program and whilst the file containing the copied file names has not been deleted.
         /// </summary>
         public static string AvoidPreviousCopiedTooltip {
             get {

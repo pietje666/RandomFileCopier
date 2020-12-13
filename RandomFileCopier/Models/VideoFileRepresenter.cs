@@ -18,6 +18,7 @@ namespace RandomFileCopier.Models
             get { return _subtitlePaths; }
             set { _subtitlePaths = value; RaisePropertyChanged(); }
         }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public string SubtitlePath
         {
             get { return string.Join(", ", SubtitlePaths); }

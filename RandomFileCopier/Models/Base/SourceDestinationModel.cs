@@ -10,16 +10,12 @@ namespace RandomFileCopier.Models.Base
     {
         private IValidator<string> _folderValidator;
 
-        private IValidator<string> _stringToDoubleValidator;
-
         private IEnumerable<string> _selectedExtensionsBackup;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification ="Raisepropertychanged not overriden")]
-        public SourceDestinationModel(IEnumerable<string> extensions, IValidator<string> folderValidator, IValidator<string> stringToDoubleValidator)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SourceDestinationModel(IEnumerable<string> extensions, IValidator<string> folderValidator)
         {
-            _folderValidator = folderValidator ?? new FolderValidator();
-            _stringToDoubleValidator = stringToDoubleValidator ?? new StringToDoubleValidator();
-            
+            _folderValidator = folderValidator ?? new FolderValidator();            
             IncludeSubDirectories = true;
             SelectedExtensions = new ObservableCollection<string>(extensions ?? new List<string>());
             
@@ -42,18 +38,19 @@ namespace RandomFileCopier.Models.Base
                     SelectedExtensions.Add(item);
                 }
             }
+            RaisePropertyChanged(nameof(SelectedExtensions));
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SourceDestinationModel(IEnumerable<string> extensions)
-            : this (extensions,  null,null)
+            : this (extensions,  null)
         {
             
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SourceDestinationModel()
-            : this( null,  null, null)
+            : this( null,  null)
         {
         }
 
@@ -112,7 +109,14 @@ namespace RandomFileCopier.Models.Base
                 RaisePropertyChanged();
             }
         }
-        
-        public ObservableCollection<string> SelectedExtensions { get; set; }
+
+        private ObservableCollection<string> _selectedExtensions;
+
+        public ObservableCollection<string> SelectedExtensions
+        {
+            get { return _selectedExtensions; }
+            set { _selectedExtensions = value; RaisePropertyChanged(); }
+        }
+
     }
 }

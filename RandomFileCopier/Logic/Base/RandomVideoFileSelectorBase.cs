@@ -10,20 +10,8 @@ namespace RandomFileCopier.Logic.Base
 {
     abstract class RandomFileSelectorBase<T> where T : CopyRepresenter
     {
-        private readonly ISerializationHelper _serializationHelper;
 
-        public RandomFileSelectorBase(ISerializationHelper serializationHelper)
-        {
-            _serializationHelper = serializationHelper ?? new SerializationHelper();
-        }
-
-        public RandomFileSelectorBase()
-            :this(null)
-        {
-
-        }
-
-        private long SelectFilesThatFit(long maximumSize, List<T> orderedFiles, CancellationToken token,IEnumerable<Func<T, bool>> extraSelectors, long selectedSize = 0, Action<T> action = null)
+        private static long SelectFilesThatFit(long maximumSize, List<T> orderedFiles, CancellationToken token,IEnumerable<Func<T, bool>> extraSelectors, long selectedSize = 0, Action<T> action = null)
         {
             int index = 0;
             //add files while size doesnt exceed total size
@@ -50,7 +38,7 @@ namespace RandomFileCopier.Logic.Base
             return selectedSize;
         }
 
-        protected Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<T> files, long minimumFileSize, long maximumFileSize, long maximumSize, CancellationToken token, IEnumerable<CopiedFile> copiedFileList, params Func<T, bool>[] extraSelectors)
+        protected static Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<T> files, long minimumFileSize, long maximumFileSize, long maximumSize, CancellationToken token, IEnumerable<CopiedFile> copiedFileList, params Func<T, bool>[] extraSelectors)
         {
             return Task.Run(() => { 
                 token.ThrowIfCancellationRequested();
@@ -74,7 +62,7 @@ namespace RandomFileCopier.Logic.Base
             });
         }
 
-        private bool MinMaxSelector(long minimumFileSize, long maximumFileSize, T fileRepresenter)
+        private static bool MinMaxSelector(long minimumFileSize, long maximumFileSize, T fileRepresenter)
         {
             return fileRepresenter.Size >= minimumFileSize && fileRepresenter.Size <= maximumFileSize;
         }

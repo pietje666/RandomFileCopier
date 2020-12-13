@@ -21,6 +21,7 @@ namespace RandomFileCopier.ViewModel
         private readonly IVideoFileRepresenterFactory _fileRepresenterFactory;
         private readonly IRandomVideoFileSelector _randomFileSelector;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public VideoCopyViewModel(IFileSearcher fileSearcher, IVideoFileRepresenterFactory videoFileRepresenterFactory, IDispatcherWrapper dispatcher, IRandomVideoFileSelector randomFileSelector, ISerializationHelper serializationHelper, IDialogService dialogService, IOpenerHelper openerHelper, IConfigurationHelper configurationHelper)
             : base( fileSearcher ?? new FileSearcher(), dispatcher ?? new DispatcherWrapper(), serializationHelper?? new SerializationHelper(), dialogService ?? new DialogService(), openerHelper ?? new OpenerHelper(), configurationHelper ?? new ConfigurationHelper())
         {

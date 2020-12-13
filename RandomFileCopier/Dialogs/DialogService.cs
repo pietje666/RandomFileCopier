@@ -16,10 +16,5 @@ namespace RandomFileCopier.Dialogs
 
             MessageBox.Show(Application.Current.MainWindow, messageText, caption, messageBoxButton, messageBoxImage, style);
         }
-
-        internal void ShowDialog(object somethingWentWrong, object error1, MessageBoxButton oK, MessageBoxImage error2)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

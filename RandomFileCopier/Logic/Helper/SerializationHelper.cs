@@ -16,6 +16,7 @@ namespace RandomFileCopier.Logic.Helper
         private readonly IDialogService _dialogService;
         private static ILogger _logger = LogManager.GetCurrentClassLogger();
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public SerializationHelper(IDialogService service)
         {
             _dialogService = service ?? new DialogService() ;

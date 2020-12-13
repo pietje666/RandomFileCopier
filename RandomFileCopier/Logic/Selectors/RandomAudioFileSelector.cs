@@ -11,7 +11,7 @@ namespace RandomFileCopier.Logic
     {
         public Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<CopyRepresenter> files, long minimumFileSize, long maximumFileSize, long maximumSize, IEnumerable<CopiedFile> copiedFileList,  CancellationToken cancellationToken)
         {
-           return base.SelectMaximumAmountOfRandomFilesAsync(files, minimumFileSize, maximumFileSize, maximumSize, cancellationToken, copiedFileList);
+           return SelectMaximumAmountOfRandomFilesAsync(files, minimumFileSize, maximumFileSize, maximumSize, cancellationToken, copiedFileList);
         }
     }
 }

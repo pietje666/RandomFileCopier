@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
 using GalaSoft.MvvmLight;
-using RandomFileCopier.Dialogs;
 using RandomFileCopier.Models;
 using RandomFileCopier.ViewModel.Base;
 
 namespace RandomFileCopier.ViewModel
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instantiated from xaml")]
     class MainViewModel
         : ViewModelBase
     {
-        private IDialogService _dialogService;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification ="RaisePropertyChangedNotOverridden")]
-        public MainViewModel(IDialogService dialogService)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public MainViewModel()
         {
-            _dialogService = dialogService;
             
             ViewModelsByMediaType = new Dictionary<MediaType, IHasDataContextSwitchingMethods>
             {

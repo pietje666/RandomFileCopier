@@ -6,6 +6,7 @@ using RandomFileCopier.Models;
 
 namespace RandomFileCopier.Converters
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Called from xaml")]
     class MediaTypeVisibilityConverter
         : IValueConverter
     {

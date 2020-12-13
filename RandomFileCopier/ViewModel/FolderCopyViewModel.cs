@@ -22,6 +22,7 @@ namespace RandomFileCopier.ViewModel
         private readonly IRandomFolderSelector _folderSelector;
         private readonly IFolderCopier _folderCopier;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public FolderCopyViewModel(IDispatcherWrapper dispatcher, IFolderSearcher folderSearcher, IRandomFolderSelector folderSelector, IFolderCopier folderCopier, ISerializationHelper serializationHelper, IDialogService dialogService, IOpenerHelper openerHelper) 
             : base(dispatcher ?? new DispatcherWrapper(), serializationHelper ?? new SerializationHelper(), dialogService ?? new DialogService(), openerHelper?? new OpenerHelper())
         {

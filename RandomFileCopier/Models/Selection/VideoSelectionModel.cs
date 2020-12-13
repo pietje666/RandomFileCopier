@@ -6,6 +6,7 @@ namespace RandomFileCopier.Models.Selection
         : SelectionModel
     {
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public VideoSelectionModel(double minimumFileSize, double maximumFileSize)
             : base(minimumFileSize, maximumFileSize, UnitSize.GB)
         {
@@ -14,6 +15,7 @@ namespace RandomFileCopier.Models.Selection
 
         private bool _videosWithSubtitlesOnly;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public bool VideosWithSubtitlesOnly
         {
             get { return _videosWithSubtitlesOnly; }

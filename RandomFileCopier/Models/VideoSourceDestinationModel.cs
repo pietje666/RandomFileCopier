@@ -6,6 +6,7 @@ namespace RandomFileCopier.Models
     class VideoSourceDestinationModel
         : SourceDestinationModel<VideoFileRepresenter>
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public VideoSourceDestinationModel(IEnumerable<string> extensions)
             : base(extensions)

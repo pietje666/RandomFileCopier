@@ -12,7 +12,7 @@ namespace RandomFileCopier.Logic
     {
         public Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<VideoFileRepresenter> files, long minimumFileSize, long maximumFileSize, long maximumSize, bool videosWithSubtitlesOnly, IEnumerable<CopiedFile> copiedFileList, CancellationToken token )
         {
-            return base.SelectMaximumAmountOfRandomFilesAsync(files, minimumFileSize, maximumFileSize,maximumSize, token, copiedFileList,
+            return SelectMaximumAmountOfRandomFilesAsync(files, minimumFileSize, maximumFileSize,maximumSize, token, copiedFileList,
                    (file) => 
                    {
                         var shouldSelect = true;

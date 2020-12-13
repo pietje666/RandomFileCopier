@@ -1,21 +1,5 @@
-/*
-  In App.xaml:
-  <Application.Resources>
-      <vm:ViewModelLocator xmlns:vm="clr-namespace:RandomFileCopier"
-                           x:Key="Locator" />
-  </Application.Resources>
-  
-  In the View:
-  DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
-
-  You can also use Blend to do all this with the tool's support.
-  See http://www.galasoft.ch/mvvm
-*/
-
-using GalaSoft.MvvmLight;
+using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
-using Microsoft.Practices.ServiceLocation;
-using NLog;
 using RandomFileCopier.Dialogs;
 
 namespace RandomFileCopier.ViewModel
@@ -38,17 +22,13 @@ namespace RandomFileCopier.ViewModel
             SimpleIoc.Default.Register<IDialogService, DialogService>();
         }
 
-        public MainViewModel MainViewModel
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static MainViewModel MainViewModel
         {
             get
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
-        }
-        
-        public static void Cleanup()
-        {
-            // TODO Clear the ViewModels
         }
     }
 }
