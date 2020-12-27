@@ -1,14 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-  <PropertyGroup>
+  <PropertyGroup>    
+    <LanguageTargets>$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Bin\Microsoft.CSharp.targets</LanguageTargets>
+
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <RootNamespace>RandomFileCopier</RootNamespace>
     <AssemblyName>RandomFileCopier</AssemblyName>
-    <AssemblyVersion>1.1.*</AssemblyVersion>
+    <AssemblyVersion>1.2.*</AssemblyVersion>
     <Deterministic>false</Deterministic>
   </PropertyGroup>
   <ItemGroup>
@@ -30,7 +32,7 @@
     <PackageReference Include="NLog">
       <Version>4.7.6</Version>
     </PackageReference>
-  </ItemGroup>
+  </ItemGroup> 
   <ItemGroup>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

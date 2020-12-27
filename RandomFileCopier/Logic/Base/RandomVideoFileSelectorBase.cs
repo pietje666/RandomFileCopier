@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Accessibility;
 using RandomFileCopier.Models;
 
 namespace RandomFileCopier.Logic.Base
@@ -17,7 +16,7 @@ namespace RandomFileCopier.Logic.Base
             return x.Name == y.Name && x.Size == y.Size;
         }
 
-        public int GetHashCode([DisallowNull] CopyRepresenter obj)
+        public int GetHashCode(CopyRepresenter obj)
         {
             if (obj == null)
             {
