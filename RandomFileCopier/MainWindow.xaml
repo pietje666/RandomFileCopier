@@ -116,6 +116,19 @@
                         </Setter.Value>
                     </Setter>
                 </DataTrigger>
+                <DataTrigger Binding="{Binding Path=DataContext.MediaType, ElementName=RootWindow}" Value="{x:Static enums:MediaType.Picture}">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <controls:CopyDataGrid ItemsSource="{Binding CollectionViewSourceItems, Mode=OneWay}" Grid.Row="0">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn IsReadOnly="True" Width="10*" Header="{x:Static resx:Resources.SizeInMB}" Binding="{Binding SizeInMB, StringFormat={}{0:F2}}"/>
+                                    </DataGrid.Columns>
+                                </controls:CopyDataGrid>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
                 <DataTrigger Binding="{Binding Path=DataContext.MediaType, ElementName=RootWindow}" Value="{x:Static enums:MediaType.Folder}">
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
@@ -141,7 +154,7 @@
                                 <StackPanel>
                                     <Expander Header="{x:Static resx:Resources.SearchOptions}">
                                     <StackPanel>
-                                            <extendedToolkit:CheckComboBox SelectedItemsOverride="{Binding Model.SelectedExtensions, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Extensions}"/>
+                                            <extendedToolkit:CheckComboBox SelectedItemsOverride="{Binding Model.SelectedExtensions, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding VideoExtensions}"/>
                                             <CheckBox Content="{x:Static resx:Resources.IncludeSubtitles}" IsChecked="{Binding Model.IncludeSubtitles}"/>
                                             <CheckBox Content="{x:Static resx:Resources.SearchSubDirectories}" IsChecked="{Binding Model.IncludeSubDirectories}"/>
                                         </StackPanel>
@@ -150,6 +163,7 @@
                                         <StackPanel>
                                             <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.OnlyVideosWithSubtitles}" IsChecked="{Binding SelectionModel.VideosWithSubtitlesOnly}"/>
                                             <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.AvoidPreviousCopied}" IsChecked="{Binding SelectionModel.AvoidPreviousCopied}" ToolTip="{x:Static resx:Resources.AvoidPreviousCopiedTooltip}"/>
+                                            <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.RemoveDuplicates}" IsChecked="{Binding SelectionModel.AvoidDuplicates}"/>
                                             <controls:MinMaxControl Command="{Binding RefreshSelectionCommand}" MinValue="{Binding SelectionModel.MinimumFileSize}" MaxValue="{Binding SelectionModel.MaximumFileSize}" SizeUnit="{x:Static resx:Resources.GB}" MaxSliderValue="10"/>
                                         </StackPanel>
                                     </Expander>
@@ -165,13 +179,37 @@
                                 <StackPanel>
                                     <Expander Header="{x:Static resx:Resources.SearchOptions}">
                                         <StackPanel>
-                                            <extendedToolkit:CheckComboBox ItemsSource="{Binding Extensions}" SelectedItemsOverride="{Binding Model.SelectedExtensions, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <extendedToolkit:CheckComboBox ItemsSource="{Binding AudioExtensions}" SelectedItemsOverride="{Binding Model.SelectedExtensions, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="{x:Static resx:Resources.SearchSubDirectories}" IsChecked="{Binding Model.IncludeSubDirectories}"/>
                                         </StackPanel>
                                     </Expander>
                                     <Expander Header="{x:Static resx:Resources.SelectionOptions}">
                                         <StackPanel>
                                             <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.AvoidPreviousCopied}" IsChecked="{Binding SelectionModel.AvoidPreviousCopied}" ToolTip="{x:Static resx:Resources.AvoidPreviousCopiedTooltip}"/>
+                                            <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.RemoveDuplicates}" IsChecked="{Binding SelectionModel.AvoidDuplicates}"/>
+                                            <controls:MinMaxControl  Command="{Binding RefreshSelectionCommand}" MinValue="{Binding SelectionModel.MinimumFileSize}" MaxValue="{Binding SelectionModel.MaximumFileSize}" SizeUnit="{x:Static resx:Resources.MB}" MaxSliderValue="350"/>
+                                        </StackPanel>
+                                    </Expander>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=DataContext.MediaType, ElementName=RootWindow}" Value="{x:Static enums:MediaType.Picture}">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Expander Header="{x:Static resx:Resources.SearchOptions}">
+                                        <StackPanel>
+                                            <extendedToolkit:CheckComboBox ItemsSource="{Binding PictureExtensions}" SelectedItemsOverride="{Binding Model.SelectedExtensions, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <CheckBox Content="{x:Static resx:Resources.SearchSubDirectories}" IsChecked="{Binding Model.IncludeSubDirectories}"/>
+                                        </StackPanel>
+                                    </Expander>
+                                    <Expander Header="{x:Static resx:Resources.SelectionOptions}">
+                                        <StackPanel>
+                                            <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.AvoidPreviousCopied}" IsChecked="{Binding SelectionModel.AvoidPreviousCopied}" ToolTip="{x:Static resx:Resources.AvoidPreviousCopiedTooltip}"/>
+                                            <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.RemoveDuplicates}" IsChecked="{Binding SelectionModel.AvoidDuplicates}"/>
                                             <controls:MinMaxControl  Command="{Binding RefreshSelectionCommand}" MinValue="{Binding SelectionModel.MinimumFileSize}" MaxValue="{Binding SelectionModel.MaximumFileSize}" SizeUnit="{x:Static resx:Resources.MB}" MaxSliderValue="350"/>
                                         </StackPanel>
                                     </Expander>
@@ -226,6 +264,7 @@
                             </StackPanel.Resources>
                             <RadioButton GroupName="MediaType" IsChecked="{Binding Path=DataContext.MediaType, ElementName=RootWindow, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MediaType.Video}}" Content="{x:Static resx:Resources.VideoFileTypes}"/>
                             <RadioButton GroupName="MediaType" IsChecked="{Binding Path=DataContext.MediaType, ElementName=RootWindow, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MediaType.Audio}}"  Content="{x:Static resx:Resources.AudioFileTypes}"/>
+                            <RadioButton GroupName="MediaType" IsChecked="{Binding Path=DataContext.MediaType, ElementName=RootWindow, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MediaType.Picture}}"  Content="{x:Static resx:Resources.PictureFileTypes}"/>
                             <RadioButton GroupName="MediaType" IsChecked="{Binding Path=DataContext.MediaType, ElementName=RootWindow, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MediaType.Folder}}"  Content="{x:Static resx:Resources.FolderFileTypes}"/>
                         </StackPanel>
                         <Button Grid.Row="1"  Content="{x:Static resx:Resources.BrowseSource}" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding BrowseSourceCommand}"/>

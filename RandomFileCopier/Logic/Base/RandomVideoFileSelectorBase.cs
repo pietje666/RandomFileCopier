@@ -1,15 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using RandomFileCopier.Logic.Helper;
+using Accessibility;
 using RandomFileCopier.Models;
 
 namespace RandomFileCopier.Logic.Base
 {
+
+    internal class IsDuplicateFileComparer : IEqualityComparer<CopyRepresenter>
+    {
+        public bool Equals(CopyRepresenter x, CopyRepresenter y)
+        {
+            return x.Name == y.Name && x.Size == y.Size;
+        }
+
+        public int GetHashCode([DisallowNull] CopyRepresenter obj)
+        {
+            if (obj == null)
+            {
+                return 0;
+            }
+            return obj.Name.GetHashCode() ^ obj.Size.GetHashCode();
+        }
+    }
+
     abstract class RandomFileSelectorBase<T> where T : CopyRepresenter
     {
+        private readonly IEqualityComparer<CopyRepresenter> _duplicateFileComparer;
+
+        public RandomFileSelectorBase(IEqualityComparer<CopyRepresenter> duplicateFileComparer)
+        {
+            _duplicateFileComparer = duplicateFileComparer ?? new IsDuplicateFileComparer();
+        }
+
+        public RandomFileSelectorBase()
+            :this(null)
+        {
+
+        }
 
         private static long SelectFilesThatFit(long maximumSize, List<T> orderedFiles, CancellationToken token,IEnumerable<Func<T, bool>> extraSelectors, long selectedSize = 0, Action<T> action = null)
         {
@@ -38,7 +69,7 @@ namespace RandomFileCopier.Logic.Base
             return selectedSize;
         }
 
-        protected static Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<T> files, long minimumFileSize, long maximumFileSize, long maximumSize, CancellationToken token, IEnumerable<CopiedFile> copiedFileList, params Func<T, bool>[] extraSelectors)
+        protected Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<T> files, long minimumFileSize, long maximumFileSize, long maximumSize, CancellationToken token, IEnumerable<CopiedFile> copiedFileList, bool avoidDuplicates, params Func<T, bool>[] extraSelectors)
         {
             return Task.Run(() => { 
                 token.ThrowIfCancellationRequested();
@@ -52,10 +83,12 @@ namespace RandomFileCopier.Logic.Base
                 {
                     selectorsList.Add(x => !copiedFileList.Any(y => y.Name == x.Name  && y.Size == x.Size));
                 }
-
                 //initial selection
                 var selectedSize = SelectFilesThatFit(maximumSize, orderedFiles.ToList(), token, selectorsList, action: x => filesCopy.Remove(x));
-
+                if (avoidDuplicates)
+                {
+                    filesCopy = filesCopy.Distinct<T>(_duplicateFileComparer).ToList();
+                }
                 var orderedFilesBySize = filesCopy.OrderBy(x => x.Size).ToList();
                 //reselect files this time ordered by size so the maximum amount of files are being selected
                 SelectFilesThatFit(maximumSize, orderedFilesBySize, token, selectorsList, selectedSize );

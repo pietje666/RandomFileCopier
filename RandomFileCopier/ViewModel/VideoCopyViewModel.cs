@@ -29,7 +29,7 @@ namespace RandomFileCopier.ViewModel
             _randomFileSelector = randomFileSelector ?? new RandomVideoFileSelector();
             SelectionModel = new VideoSelectionModel(0, 10);
             var settings = ConfigurationHelper.GetExtensions(ExtensionsAppsettingKey.VideoExtensions);
-            Extensions = new ObservableCollection<string>(settings.Select(x => x.Extension));
+            VideoExtensions = new ObservableCollection<string>(settings.Select(x => x.Extension));
             Model = new VideoSourceDestinationModel(settings.Where(x => x.DefaultSelected).Select(x => x.Extension));
         }
 
@@ -76,7 +76,9 @@ namespace RandomFileCopier.ViewModel
 
         protected override Task SelectRandomFilesAsync(IEnumerable<VideoFileRepresenter> copyRepresenter, IEnumerable<CopiedFile> copiedFileList,  CancellationToken token)
         {
-            return _randomFileSelector.SelectMaximumAmountOfRandomFilesAsync(copyRepresenter,SelectionModel.MinimumFileSizeInBytes, SelectionModel.MaximumFileSizeInBytes, SelectionModel.SelectedSizeInBytes, SelectionModel.VideosWithSubtitlesOnly, copiedFileList, token );
+            return _randomFileSelector.SelectMaximumAmountOfRandomFilesAsync(copyRepresenter,SelectionModel.MinimumFileSizeInBytes, SelectionModel.MaximumFileSizeInBytes, SelectionModel.SelectedSizeInBytes, SelectionModel.VideosWithSubtitlesOnly, copiedFileList, SelectionModel.AvoidDuplicates, token );
         }
+
+        public ObservableCollection<string> VideoExtensions { get; set; }
     }
 }

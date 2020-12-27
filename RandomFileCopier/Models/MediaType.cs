@@ -5,6 +5,7 @@
         None = 0,
         Video, 
         Audio,
+        Picture,
         Folder
     }
 }

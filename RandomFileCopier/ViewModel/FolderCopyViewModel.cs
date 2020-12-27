@@ -60,7 +60,7 @@ namespace RandomFileCopier.ViewModel
 
         protected override Task SelectRandomFilesAsync(IEnumerable<CopyRepresenter> copyRepresenterList, IEnumerable<CopiedFile> copiedFileList, CancellationToken token)
         {
-           return _folderSelector.SelectMaximumAmountOfRandomFoldersAsync(copyRepresenterList, SelectionModel.MinimumFileSizeInBytes, SelectionModel.MaximumFileSizeInBytes ,SelectionModel.SelectedSizeInBytes, copiedFileList, token);
+           return _folderSelector.SelectMaximumAmountOfRandomFoldersAsync(copyRepresenterList, SelectionModel.MinimumFileSizeInBytes, SelectionModel.MaximumFileSizeInBytes ,SelectionModel.SelectedSizeInBytes, copiedFileList, SelectionModel.AvoidDuplicates, token);
         }
 
         protected override Task<IListWithErrorDictionary<CopiedFile>> CopySpecificAsync(CancellationToken token)

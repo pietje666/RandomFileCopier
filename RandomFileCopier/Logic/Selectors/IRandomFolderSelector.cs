@@ -7,6 +7,6 @@ namespace RandomFileCopier.Logic
 {
     interface IRandomFolderSelector
     {
-        Task SelectMaximumAmountOfRandomFoldersAsync(IEnumerable<CopyRepresenter> files, long minimumFileSize, long maximumFileSize, long maximumSize,IEnumerable<CopiedFile> copiedFileList, CancellationToken token);
+        Task SelectMaximumAmountOfRandomFoldersAsync(IEnumerable<CopyRepresenter> files, long minimumFileSize, long maximumFileSize, long maximumSize,IEnumerable<CopiedFile> copiedFileList, bool avoidDuplicates, CancellationToken token);
     }
 }

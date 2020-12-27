@@ -18,6 +18,7 @@ namespace RandomFileCopier.ViewModel
             {
                 {  MediaType.Video, new VideoCopyViewModel() },
                 {  MediaType.Audio, new AudioCopyViewModel() },
+                {  MediaType.Picture, new PictureCopyViewModel() },
                 {  MediaType.Folder, new FolderCopyViewModel() }
             };
             MediaType = MediaType.Video;

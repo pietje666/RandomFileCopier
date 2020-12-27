@@ -10,9 +10,9 @@ namespace RandomFileCopier.Logic
     class RandomVideoFileSelector 
         : RandomFileSelectorBase<VideoFileRepresenter>, IRandomVideoFileSelector
     {
-        public Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<VideoFileRepresenter> files, long minimumFileSize, long maximumFileSize, long maximumSize, bool videosWithSubtitlesOnly, IEnumerable<CopiedFile> copiedFileList, CancellationToken token )
+        public Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<VideoFileRepresenter> files, long minimumFileSize, long maximumFileSize, long maximumSize, bool videosWithSubtitlesOnly, IEnumerable<CopiedFile> copiedFileList, bool avoidDuplicates, CancellationToken token )
         {
-            return SelectMaximumAmountOfRandomFilesAsync(files, minimumFileSize, maximumFileSize,maximumSize, token, copiedFileList,
+            return SelectMaximumAmountOfRandomFilesAsync(files, minimumFileSize, maximumFileSize,maximumSize, token, copiedFileList, avoidDuplicates,
                    (file) => 
                    {
                         var shouldSelect = true;

@@ -27,7 +27,7 @@ namespace RandomFileCopier.ViewModel
             _randomAudioFileSelector = randomFileSelector ?? new RandomAudioFileSelector();
             SelectionModel = new SelectionModel(0, 350, UnitSize.MB);
             var settings = ConfigurationHelper.GetExtensions(ExtensionsAppsettingKey.AudioExtensions);
-            Extensions = new ObservableCollection<string>(settings.Select(x => x.Extension));
+            AudioExtensions = new ObservableCollection<string>(settings.Select(x => x.Extension));
             Model = new AudioSourceDestinationModel(settings.Where(x => x.DefaultSelected).Select(x => x.Extension));
             
         }
@@ -44,7 +44,9 @@ namespace RandomFileCopier.ViewModel
 
         protected override Task SelectRandomFilesAsync(IEnumerable<CopyRepresenter> filesList, IEnumerable<CopiedFile> copiedFileList, CancellationToken token )
         {
-           return _randomAudioFileSelector.SelectMaximumAmountOfRandomFilesAsync(filesList, SelectionModel.MinimumFileSizeInBytes ,SelectionModel.MaximumFileSizeInBytes, SelectionModel.SelectedSizeInBytes,copiedFileList, token);
+           return _randomAudioFileSelector.SelectMaximumAmountOfRandomFilesAsync(filesList, SelectionModel.MinimumFileSizeInBytes ,SelectionModel.MaximumFileSizeInBytes, SelectionModel.SelectedSizeInBytes,copiedFileList, SelectionModel.AvoidDuplicates, token);
         }
+
+        public ObservableCollection<string> AudioExtensions { get; set; }
     }
 }

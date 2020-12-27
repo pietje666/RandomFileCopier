@@ -10,8 +10,6 @@ namespace RandomFileCopier.Models.Base
     {
         private IValidator<string> _folderValidator;
 
-        private IEnumerable<string> _selectedExtensionsBackup;
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SourceDestinationModel(IEnumerable<string> extensions, IValidator<string> folderValidator)
         {
@@ -20,26 +18,7 @@ namespace RandomFileCopier.Models.Base
             SelectedExtensions = new ObservableCollection<string>(extensions ?? new List<string>());
             
             Items = new ObservableCollection<TCopyRepresenter>();
-        }
-
-        public void BackExtensionsUp()
-        {
-            _selectedExtensionsBackup = new List<string>(SelectedExtensions);
-        }
-
-        public void RestoreSelectedExtensions()
-        {
-            if (_selectedExtensionsBackup != null)
-            {
-                //clear necesarry for a view without extensions, because then the itemssource doesnt get cleared => selected extensions neither
-                SelectedExtensions.Clear();
-                foreach (var item in _selectedExtensionsBackup)
-                {
-                    SelectedExtensions.Add(item);
-                }
-            }
-            RaisePropertyChanged(nameof(SelectedExtensions));
-        }
+        }      
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SourceDestinationModel(IEnumerable<string> extensions)

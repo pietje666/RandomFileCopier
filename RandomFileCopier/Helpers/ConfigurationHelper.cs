@@ -7,7 +7,8 @@ namespace RandomFileCopier.Helpers
     enum ExtensionsAppsettingKey
     {
         VideoExtensions,
-        AudioExtensions
+        AudioExtensions,
+        PictureExtensions
     }
 
     class ConfigurationHelper 

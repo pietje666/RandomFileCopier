@@ -92,6 +92,15 @@ namespace RandomFileCopier.Models.Selection.Base
             set { _avoidPreviousCopied = value; RaisePropertyChanged(); }
         }
 
+        private bool _removeDuplicates;
+
+        public bool AvoidDuplicates
+        {
+            get { return _removeDuplicates; }
+            set { _removeDuplicates = value; RaisePropertyChanged(); }
+        }
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         private long CalculateSizeInBytes(double size)
         {

@@ -85,6 +85,6 @@ namespace RandomFileCopier.ViewModel.Base
 
         public IFileSearcher FileSearcher { get; private set; }
         public IConfigurationHelper ConfigurationHelper { get; private set; }
-        public ObservableCollection<string> Extensions { get; set; }
+        
     }
 }

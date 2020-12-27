@@ -277,6 +277,15 @@ namespace RandomFileCopier.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Picture file types.
+        /// </summary>
+        public static string PictureFileTypes {
+            get {
+                return ResourceManager.GetString("PictureFileTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please wait.....
         /// </summary>
         public static string PleaseWait {
@@ -300,6 +309,15 @@ namespace RandomFileCopier.Properties {
         public static string Refresh {
             get {
                 return ResourceManager.GetString("Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove duplicates.
+        /// </summary>
+        public static string RemoveDuplicates {
+            get {
+                return ResourceManager.GetString("RemoveDuplicates", resourceCulture);
             }
         }
         
