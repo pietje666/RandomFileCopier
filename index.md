@@ -13,6 +13,8 @@ Start Random File Copier
 * Click Start Copy to start copying files
 * Enjoy your copied Video/Audio/Folders!
 
+A usecase i often use it for is to move many files to a single folder. For instance, you have multiple picture files scattered over multiple folders and want to put them together in one folder and remove duplicates. In order to use it like this just select the parent folder containing the child folders, as the destination folder choose the folder where you want to copy it too. Make sure to put the maximum amount of data to be copied and hit the Search button followed by the Start Copy button.
+
 # Screenshots
 ![Video](assets/application/Video.PNG?raw=true)
 
