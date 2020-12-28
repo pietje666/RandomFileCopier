@@ -6152,7 +6152,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RandomFileCopier"
         "ProductCode" = "8:{FC4FDF71-5F5B-4736-B8AA-4C72C7B19A58}"
-        "PackageCode" = "8:{F7D33BFA-9380-40E2-97D3-91A5CA6AE48F}"
+        "PackageCode" = "8:{DE369B3A-DD06-437B-9171-5FB2A6DEB3C3}"
         "UpgradeCode" = "8:{3CA10413-3BC4-4EB5-A37F-AFE3A7FCC39F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -6283,7 +6283,7 @@
             "Target" = "8:_690C3B3743374C8488E5244D962472E1"
             "Folder" = "8:_E250044F22E14ED8937F312F2E34F661"
             "WorkingFolder" = "8:_41F7DE4F1FF34B44A07CBA682779D23F"
-            "Icon" = "8:"
+            "Icon" = "8:_97A5E55BC7914239BF2E496A28957F29"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_A15B60AAEEFE40EA8B01E77706E74779"
@@ -6297,7 +6297,7 @@
             "Target" = "8:_690C3B3743374C8488E5244D962472E1"
             "Folder" = "8:_C4B813156E8741AA82E5AF33A63E79B1"
             "WorkingFolder" = "8:_41F7DE4F1FF34B44A07CBA682779D23F"
-            "Icon" = "8:"
+            "Icon" = "8:_97A5E55BC7914239BF2E496A28957F29"
             "Feature" = "8:"
             }
         }
