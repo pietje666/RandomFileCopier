@@ -68,7 +68,7 @@ namespace RandomFileCopier.Logic.Base
             return selectedSize;
         }
 
-        protected Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<T> files, long minimumFileSize, long maximumFileSize, long maximumSize, CancellationToken token, IEnumerable<CopiedFile> copiedFileList, bool avoidDuplicates, params Func<T, bool>[] extraSelectors)
+        protected Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<T> files, long minimumFileSize, long maximumFileSize, long maximumSize, CancellationToken token, IEnumerable<MovedOrCopiedFile> copiedFileList, bool avoidDuplicates, params Func<T, bool>[] extraSelectors)
         {
             return Task.Run(() => { 
                 token.ThrowIfCancellationRequested();

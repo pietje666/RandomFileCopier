@@ -4,10 +4,10 @@ using Newtonsoft.Json;
 
 namespace RandomFileCopier.Models
 {
-    class CopiedFile
+    class MovedOrCopiedFile
     {
 
-        public CopiedFile(string name, long size, DateTime copiedDateTime)
+        public MovedOrCopiedFile(string name, long size, DateTime copiedDateTime)
         {
             Name = name;
             Size = size;
