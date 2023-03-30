@@ -9,7 +9,7 @@ namespace RandomFileCopier.Logic.Selectors
     class RandomPictureFileSelector
         : RandomFileSelectorBase<CopyRepresenter>, IRandomPictureFileSelector
     {
-        public Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<CopyRepresenter> files, long minimumFileSize, long maximumFileSize, long maximumSize, IEnumerable<CopiedFile> copiedFileList, bool avoidDuplicates, CancellationToken cancellationToken)
+        public Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<CopyRepresenter> files, long minimumFileSize, long maximumFileSize, long maximumSize, IEnumerable<MovedOrCopiedFile> copiedFileList, bool avoidDuplicates, CancellationToken cancellationToken)
         {
             return SelectMaximumAmountOfRandomFilesAsync(files, minimumFileSize, maximumFileSize, maximumSize, cancellationToken, copiedFileList, avoidDuplicates);
         }

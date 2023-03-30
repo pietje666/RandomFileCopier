@@ -62,6 +62,7 @@ namespace RandomFileCopier.ViewModel.Base
             });
             BrowseDestinationCommand = new RelayCommand(() => Model.DestinationPath = _openerHelper.OpenDestinationFileDialog());
             CopyCommand = new AsyncRelayCommand(CopyAsync, () => !IsBusySearching && Model.Items.Any(x => x.IsSelected) && TotalSelectedSize < SelectionModel.SelectedSize);
+            MoveCommand = new AsyncRelayCommand(MoveAsync, () => !IsBusySearching && Model.Items.Any(x => x.IsSelected) && TotalSelectedSize < SelectionModel.SelectedSize);
             FindFilesCommand = new AsyncRelayCommand(FindFilesAsync, CanFindFiles);
             CancelFindFilesCommand = new RelayCommand(() => _searchCancellationTokenSource.Cancel(), () => IsBusySearching);
             CancelCopyCommand = new RelayCommand(() => _copyCancellationTokenSource.Cancel(), () => IsBusyCopying);
@@ -73,12 +74,32 @@ namespace RandomFileCopier.ViewModel.Base
             RefreshSelectionCommand = new RelayCommand(() => ReSelectRandomFiles(Model.Items));
         }
 
+        private async Task MoveAsync()
+        {
+            IsBusyMoving = true;
+            FindFilesCommand.RaiseCanExecuteChanged();
+            IListWithErrorDictionary<MovedOrCopiedFile> movedFiles = null;
+            try
+            {
+                movedFiles = await MoveSpecificAsync();
+
+            }          
+            finally
+            {
+                Model.Items.Clear();
+                IsBusyMoving = false;
+                FindFilesCommand.RaiseCanExecuteChanged();
+            }
+            ShowCopyFinishedMessage(movedFiles != null && !movedFiles.Errors.Any(), Resources.SuccessMove , Resources.SomeFilesHaveNotBeenMoved );
+            MoveCommand.RaiseCanExecuteChanged();
+        }
 
         public RelayCommand BrowseSourceCommand { get; private set; }
         public RelayCommand BrowseDestinationCommand { get; private set; }
         public AsyncRelayCommand FindFilesCommand { get; private set; }
         public RelayCommand CancelFindFilesCommand { get; private set; }
         public AsyncRelayCommand CopyCommand { get; private set; }
+        public AsyncRelayCommand MoveCommand { get; private set; }
         public RelayCommand SelectionClicked { get; private set; }
         public RelayCommand SliderDragCompletedCommand { get; private set; }
         public RelayCommand SliderDragStartedCommand { get; private set; }
@@ -89,16 +110,16 @@ namespace RandomFileCopier.ViewModel.Base
         public RelayCommand SliderLoadedCommand { get; private set; }
         public RelayCommand SliderUnloadedCommand { get; private set; }
 
-        protected abstract Task SelectRandomFilesAsync(IEnumerable<TCopyRepresenter> copyRepresenterList, IEnumerable<CopiedFile> copiedFileList, CancellationToken token);
+        protected abstract Task SelectRandomFilesAsync(IEnumerable<TCopyRepresenter> copyRepresenterList, IEnumerable<MovedOrCopiedFile> copiedFileList, CancellationToken token);
         protected abstract Task SpecificSearchAsync(string path, CancellationToken token);
-
-        protected abstract Task<IListWithErrorDictionary<CopiedFile>> CopySpecificAsync(CancellationToken token);
+        protected abstract Task<IListWithErrorDictionary<MovedOrCopiedFile>> MoveSpecificAsync();
+        protected abstract Task<IListWithErrorDictionary<MovedOrCopiedFile>> CopySpecificAsync(CancellationToken token);
 
         protected virtual void OnSelectionModelPropertyChanged(object sender, PropertyChangedEventArgs e) { }
 
-        protected IEnumerable<CopiedFile> GetFileListOrNullIfNotApplicable()
+        protected IEnumerable<MovedOrCopiedFile> GetFileListOrNullIfNotApplicable()
         {
-            IEnumerable<CopiedFile> copiedFileList = null;
+            IEnumerable<MovedOrCopiedFile> copiedFileList = null;
 
             if (SelectionModel.AvoidPreviousCopied)
             {
@@ -167,6 +188,7 @@ namespace RandomFileCopier.ViewModel.Base
             RaisePropertyChanged(() => SelectedFilesCount);
             CalculateTotalSelectedSize();
             CopyCommand.RaiseCanExecuteChanged();
+            MoveCommand.RaiseCanExecuteChanged();
         }
 
         protected Task FindFilesAsync()
@@ -177,6 +199,8 @@ namespace RandomFileCopier.ViewModel.Base
                  {
                      Dispatcher.Invoke(() => IsBusySearching = true);
                      Dispatcher.Invoke(CopyCommand.RaiseCanExecuteChanged);
+                     Dispatcher.Invoke(MoveCommand.RaiseCanExecuteChanged);
+
 
                      _searchCancellationTokenSource = new CancellationTokenSource();
                      ClearPreviousSearchResults();
@@ -199,6 +223,8 @@ namespace RandomFileCopier.ViewModel.Base
                          CalculateTotalSelectedSize();
                          IsBusySearching = false;
                          Dispatcher.Invoke(CopyCommand.RaiseCanExecuteChanged);
+                         Dispatcher.Invoke(MoveCommand.RaiseCanExecuteChanged);
+
                      }
                  }
              });
@@ -246,7 +272,7 @@ namespace RandomFileCopier.ViewModel.Base
 
         private bool CanFindFiles()
         {
-            return !IsBusySearching && !IsBusyCopying && !string.IsNullOrEmpty(Model.SourcePath)
+            return !IsBusySearching && !IsBusyMoving && !IsBusyCopying && !string.IsNullOrEmpty(Model.SourcePath)
                 && !string.IsNullOrEmpty(Model.DestinationPath)
                 && !Model.HasPropertyErrors(nameof(Model.SourcePath))
                 && !Model.HasPropertyErrors(nameof(Model.DestinationPath));
@@ -277,7 +303,7 @@ namespace RandomFileCopier.ViewModel.Base
             IsBusyCopying = true;
             FindFilesCommand.RaiseCanExecuteChanged();
             _copyCancellationTokenSource = new CancellationTokenSource();
-            IListWithErrorDictionary<CopiedFile> copiedFiles = null;
+            IListWithErrorDictionary<MovedOrCopiedFile> copiedFiles = null;
             var cancelled = false;
             try
             {
@@ -297,23 +323,24 @@ namespace RandomFileCopier.ViewModel.Base
                 Model.Items.Clear();
                 IsBusyCopying = false;
                 FindFilesCommand.RaiseCanExecuteChanged();
+                CopyCommand.RaiseCanExecuteChanged();
             }
 
             if (!cancelled)
             {
-                ShowFinishedMessage(copiedFiles != null && !copiedFiles.Errors.Any());
+                ShowCopyFinishedMessage(copiedFiles != null && !copiedFiles.Errors.Any(), Resources.Success, Resources.SomeFilesHaveNotBeenCopied);
             }
         }
 
-        private void ShowFinishedMessage(bool showWarning)
+        private void ShowCopyFinishedMessage(bool showSucces, string successMessage, string warningMessage)
         {
-            if (showWarning)
+            if (showSucces)
             {
-                _dialogService.ShowDialog(Resources.Success, Resources.Info, MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                _dialogService.ShowDialog(successMessage, Resources.Info, MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
             }
             else
             {
-                _dialogService.ShowDialog(Resources.SomeFilesHaveNotBeenCopied, Resources.Warning, MessageBoxButton.OK, MessageBoxImage.Warning);
+                _dialogService.ShowDialog(warningMessage, Resources.Warning, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -356,7 +383,7 @@ namespace RandomFileCopier.ViewModel.Base
         public CopyRepresenter SelectedItem { get; set; }
         public ICollectionView CollectionViewSourceItems { get; private set; }
         public IDispatcherWrapper Dispatcher { get; private set; }
-        public IEnumerable<CopiedFile> PreviouslyCopiedFileList { get; private set; }
+        public IEnumerable<MovedOrCopiedFile> PreviouslyCopiedFileList { get; private set; }
 
         public int SelectedFilesCount
         {
@@ -394,6 +421,15 @@ namespace RandomFileCopier.ViewModel.Base
             get { return _isBusyCopying; }
             set { _isBusyCopying = value; RaisePropertyChanged(); }
         }
+
+        private bool _isBusyMoving;
+
+        public bool IsBusyMoving
+        {
+            get { return _isBusyMoving; }
+            set { _isBusyMoving = value; RaisePropertyChanged(); }
+        }
+
 
         private int _progress;
 

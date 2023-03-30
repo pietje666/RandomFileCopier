@@ -28,19 +28,19 @@ namespace RandomFileCopier.Logic.Helper
 
         }
 
-        public IEnumerable<CopiedFile> GetCopiedFileList(string destinationPath)
+        public IEnumerable<MovedOrCopiedFile> GetCopiedFileList(string destinationPath)
         {
 
-            var copiedFileList = Enumerable.Empty<CopiedFile>();
+            var copiedFileList = Enumerable.Empty<MovedOrCopiedFile>();
             var jsonFileDestinationPath = Path.Combine(destinationPath, JSONFILENAME);
             if (File.Exists(jsonFileDestinationPath))
             {
-                copiedFileList = JsonConvert.DeserializeObject<IEnumerable<CopiedFile>>(File.ReadAllText(jsonFileDestinationPath));
+                copiedFileList = JsonConvert.DeserializeObject<IEnumerable<MovedOrCopiedFile>>(File.ReadAllText(jsonFileDestinationPath));
             }
             return copiedFileList;
         }
 
-        public void WriteCopiedFileList(string destinationPath,IEnumerable<CopiedFile> copiedFileList)
+        public void WriteCopiedFileList(string destinationPath,IEnumerable<MovedOrCopiedFile> copiedFileList)
         {
             try
             {

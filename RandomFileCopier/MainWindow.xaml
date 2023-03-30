@@ -39,6 +39,9 @@
             <converters:InvertedBooleanConverter/>
             <BooleanToVisibilityConverter/>
         </converters:ValueConverterGroup>
+        <Style TargetType="{x:Type RadioButton}">
+            <Setter Property="Margin" Value="0 0 5 0"/>
+        </Style>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Padding" Value="4,4,4,4"/>
         </Style>
@@ -167,6 +170,12 @@
                                             <controls:MinMaxControl Command="{Binding RefreshSelectionCommand}" MinValue="{Binding SelectionModel.MinimumFileSize}" MaxValue="{Binding SelectionModel.MaximumFileSize}" SizeUnit="{x:Static resx:Resources.GB}" MaxSliderValue="10"/>
                                         </StackPanel>
                                     </Expander>
+                                    <Expander Header="{x:Static resx:Resources.CopyOrMoveOptions}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton GroupName="CopyOrMove" IsChecked="{Binding Path=Model.MoveOrCopyOptions, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MoveOrCopyOptions.Copy}}" Content="{x:Static resx:Resources.Copy}"></RadioButton>
+                                            <RadioButton GroupName="CopyOrMove" IsChecked="{Binding Path=Model.MoveOrCopyOptions, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MoveOrCopyOptions.Move}}" Content="{x:Static resx:Resources.Move}"></RadioButton>
+                                        </StackPanel>
+                                    </Expander>
                                 </StackPanel>
                             </DataTemplate>
                         </Setter.Value>
@@ -188,6 +197,12 @@
                                             <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.AvoidPreviousCopied}" IsChecked="{Binding SelectionModel.AvoidPreviousCopied}" ToolTip="{x:Static resx:Resources.AvoidPreviousCopiedTooltip}"/>
                                             <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.RemoveDuplicates}" IsChecked="{Binding SelectionModel.AvoidDuplicates}"/>
                                             <controls:MinMaxControl  Command="{Binding RefreshSelectionCommand}" MinValue="{Binding SelectionModel.MinimumFileSize}" MaxValue="{Binding SelectionModel.MaximumFileSize}" SizeUnit="{x:Static resx:Resources.MB}" MaxSliderValue="350"/>
+                                        </StackPanel>
+                                    </Expander>
+                                    <Expander Header="{x:Static resx:Resources.CopyOrMoveOptions}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton GroupName="CopyOrMove" IsChecked="{Binding Path=Model.MoveOrCopyOptions, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MoveOrCopyOptions.Copy}}" Content="{x:Static resx:Resources.Copy}"></RadioButton>
+                                            <RadioButton GroupName="CopyOrMove" IsChecked="{Binding Path=Model.MoveOrCopyOptions, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MoveOrCopyOptions.Move}}" Content="{x:Static resx:Resources.Move}"></RadioButton>
                                         </StackPanel>
                                     </Expander>
                                 </StackPanel>
@@ -213,6 +228,12 @@
                                             <controls:MinMaxControl  Command="{Binding RefreshSelectionCommand}" MinValue="{Binding SelectionModel.MinimumFileSize}" MaxValue="{Binding SelectionModel.MaximumFileSize}" SizeUnit="{x:Static resx:Resources.MB}" MaxSliderValue="350"/>
                                         </StackPanel>
                                     </Expander>
+                                    <Expander Header="{x:Static resx:Resources.CopyOrMoveOptions}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton GroupName="CopyOrMove" IsChecked="{Binding Path=Model.MoveOrCopyOptions, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MoveOrCopyOptions.Copy}}" Content="{x:Static resx:Resources.Copy}"></RadioButton>
+                                            <RadioButton GroupName="CopyOrMove" IsChecked="{Binding Path=Model.MoveOrCopyOptions, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MoveOrCopyOptions.Move}}" Content="{x:Static resx:Resources.Move}"></RadioButton>
+                                        </StackPanel>
+                                    </Expander>
                                 </StackPanel>
                             </DataTemplate>
                         </Setter.Value>
@@ -222,12 +243,20 @@
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <Expander Header="{x:Static resx:Resources.SelectionOptions}">
-                                    <StackPanel>
-                                        <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.AvoidPreviousCopied}" IsChecked="{Binding SelectionModel.AvoidPreviousCopied}" ToolTip="{x:Static resx:Resources.AvoidPreviousCopiedTooltip}"/>
-                                        <controls:MinMaxControl  Command="{Binding RefreshSelectionCommand}" MinValue="{Binding SelectionModel.MinimumFileSize}" MaxValue="{Binding SelectionModel.MaximumFileSize}" SizeUnit="{x:Static resx:Resources.GB}" MaxSliderValue="100"/>
-                                    </StackPanel>
-                                </Expander>
+                                <StackPanel>
+                                    <Expander Header="{x:Static resx:Resources.SelectionOptions}">
+                                        <StackPanel>
+                                            <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.AvoidPreviousCopied}" IsChecked="{Binding SelectionModel.AvoidPreviousCopied}" ToolTip="{x:Static resx:Resources.AvoidPreviousCopiedTooltip}"/>
+                                            <controls:MinMaxControl  Command="{Binding RefreshSelectionCommand}" MinValue="{Binding SelectionModel.MinimumFileSize}" MaxValue="{Binding SelectionModel.MaximumFileSize}" SizeUnit="{x:Static resx:Resources.GB}" MaxSliderValue="100"/>
+                                        </StackPanel>
+                                    </Expander>
+                                    <Expander Header="{x:Static resx:Resources.CopyOrMoveOptions}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton GroupName="CutOrCopy" IsChecked="{Binding Path=Model.MoveOrCopyOptions, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MoveOrCopyOptions.Copy}}" Content="{x:Static resx:Resources.Copy}"></RadioButton>
+                                            <RadioButton GroupName="CutOrCopy" IsChecked="{Binding Path=Model.MoveOrCopyOptions, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MoveOrCopyOptions.Move}}" Content="{x:Static resx:Resources.Move}"></RadioButton>
+                                        </StackPanel>
+                                    </Expander>
+                                </StackPanel>
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
@@ -257,11 +286,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="{StaticResource Margin}">
-                            <StackPanel.Resources>
-                                <Style TargetType="{x:Type RadioButton}">
-                                    <Setter Property="Margin" Value="0 0 5 0"/>
-                                </Style>
-                            </StackPanel.Resources>
+
                             <RadioButton GroupName="MediaType" IsChecked="{Binding Path=DataContext.MediaType, ElementName=RootWindow, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MediaType.Video}}" Content="{x:Static resx:Resources.VideoFileTypes}"/>
                             <RadioButton GroupName="MediaType" IsChecked="{Binding Path=DataContext.MediaType, ElementName=RootWindow, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MediaType.Audio}}"  Content="{x:Static resx:Resources.AudioFileTypes}"/>
                             <RadioButton GroupName="MediaType" IsChecked="{Binding Path=DataContext.MediaType, ElementName=RootWindow, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static enums:MediaType.Picture}}"  Content="{x:Static resx:Resources.PictureFileTypes}"/>
@@ -335,23 +360,38 @@
         </Grid>
         <Button Grid.Row="2" Visibility="{Binding IsBusySearching, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"  Command="{Binding FindFilesCommand}" Margin="{StaticResource Margin}"  Content="{x:Static resx:Resources.FindFiles}" />
         <Button Grid.Row="2" Visibility="{Binding IsBusySearching, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding CancelFindFilesCommand}" Margin="{StaticResource Margin}"  Content="{x:Static resx:Resources.Cancel}" />
-        <Button Grid.Row="3" Visibility="{Binding IsBusyCopying, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" Content="{x:Static resx:Resources.StartCopy}"  Command="{Binding CopyCommand}"/>
-        <Grid Grid.Row="3" Visibility="{Binding IsBusyCopying, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Button Grid.Row="0"  Content="{x:Static resx:Resources.Cancel}"  Command="{Binding CancelCopyCommand}"/>
-            <!--Ugly but simple and does work progressbar and textblock overlay eachother and everything looks nice--> 
-            <ProgressBar Name="copyProgressBar" Margin="0 5 0 0" Grid.Row="1" Height="20" IsIndeterminate="True"/>
-            <TextBlock Margin="{Binding Margin, ElementName=copyProgressBar}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="{x:Static resx:Resources.ProcessingFiles}">
-                        <Binding Path="Progress"/>
-                        <Binding Path="MaxProgressBarValue"/>
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
-        </Grid>
+        <Border Grid.Row="3" Visibility="{Binding Path=Model.MoveOrCopyOptions, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static enums:MoveOrCopyOptions.Move}}">
+            <Grid>
+                <Button Grid.Row="3" Visibility="{Binding IsBusyMoving, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" Content="{x:Static resx:Resources.StartMove}"  Command="{Binding MoveCommand}"/>
+                <Grid Grid.Row="3" Visibility="{Binding IsBusyMoving, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                </Grid>
+            </Grid>
+        </Border>
+        <Border Grid.Row="3" Visibility="{Binding Path=Model.MoveOrCopyOptions, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static enums:MoveOrCopyOptions.Copy}}">
+            <Grid>
+                <Button Grid.Row="3" Visibility="{Binding IsBusyCopying, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" Content="{x:Static resx:Resources.StartCopy}"  Command="{Binding CopyCommand}"/>
+                <Grid Grid.Row="3" Visibility="{Binding IsBusyCopying, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0"  Content="{x:Static resx:Resources.Cancel}"  Command="{Binding CancelCopyCommand}"/>
+                    <!--Ugly but simple and does work progressbar and textblock overlay eachother and everything looks nice-->
+                    <ProgressBar Name="copyProgressBar" Margin="0 5 0 0" Grid.Row="1" Height="20" IsIndeterminate="True"/>
+                    <TextBlock Margin="{Binding Margin, ElementName=copyProgressBar}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{x:Static resx:Resources.ProcessingFiles}">
+                                <Binding Path="Progress"/>
+                                <Binding Path="MaxProgressBarValue"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

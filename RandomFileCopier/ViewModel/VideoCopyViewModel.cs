@@ -68,13 +68,26 @@ namespace RandomFileCopier.ViewModel
             
         }
 
+        protected override void MoveSpecific(VideoFileRepresenter copyRepresenter)
+        {
+            if (Model.IncludeSubtitles)
+            {
+                foreach (var subtitlePath in copyRepresenter.SubtitlePaths)
+                {
+                    var subtitleName = Path.GetFileName(subtitlePath);
+                    File.Move(subtitlePath, Path.Combine(Model.DestinationPath, subtitleName));
+                }
+            }
+        }
+
+
 
         protected override VideoFileRepresenter CreateFileRepresenter(FileInfo fileInfo)
         {
             return _fileRepresenterFactory.CreateVideoFileRepresenter(fileInfo, Model.IncludeSubtitles);
         }
 
-        protected override Task SelectRandomFilesAsync(IEnumerable<VideoFileRepresenter> copyRepresenter, IEnumerable<CopiedFile> copiedFileList,  CancellationToken token)
+        protected override Task SelectRandomFilesAsync(IEnumerable<VideoFileRepresenter> copyRepresenter, IEnumerable<MovedOrCopiedFile> copiedFileList,  CancellationToken token)
         {
             return _randomFileSelector.SelectMaximumAmountOfRandomFilesAsync(copyRepresenter,SelectionModel.MinimumFileSizeInBytes, SelectionModel.MaximumFileSizeInBytes, SelectionModel.SelectedSizeInBytes, SelectionModel.VideosWithSubtitlesOnly, copiedFileList, SelectionModel.AvoidDuplicates, token );
         }
