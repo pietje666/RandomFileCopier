@@ -5,7 +5,7 @@ namespace RandomFileCopier.Logic.Helper
 {
     interface ISerializationHelper
     {
-        IEnumerable<CopiedFile> GetCopiedFileList(string destinationPath);
-        void WriteCopiedFileList(string destinationPath, IEnumerable<CopiedFile> copiedFileList);
+        IEnumerable<MovedOrCopiedFile> GetCopiedFileList(string destinationPath);
+        void WriteCopiedFileList(string destinationPath, IEnumerable<MovedOrCopiedFile> copiedFileList);
     }
 }

@@ -7,6 +7,6 @@ namespace RandomFileCopier.Logic
 {
     interface IRandomAudioFileSelector
     {
-        Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<CopyRepresenter> files, long minimumFileSize, long maximumFileSize, long maximumSize, IEnumerable<CopiedFile> copiedFileList, bool avoidDuplicates, CancellationToken token);
+        Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<CopyRepresenter> files, long minimumFileSize, long maximumFileSize, long maximumSize, IEnumerable<MovedOrCopiedFile> copiedFileList, bool avoidDuplicates, CancellationToken token);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,15 +59,15 @@ namespace RandomFileCopier.ViewModel
             await SelectRandomFilesAsync(Model.Items, copiedFileList, token);
         }
 
-        protected override Task SelectRandomFilesAsync(IEnumerable<CopyRepresenter> copyRepresenterList, IEnumerable<CopiedFile> copiedFileList, CancellationToken token)
+        protected override Task SelectRandomFilesAsync(IEnumerable<CopyRepresenter> copyRepresenterList, IEnumerable<MovedOrCopiedFile> copiedFileList, CancellationToken token)
         {
            return _folderSelector.SelectMaximumAmountOfRandomFoldersAsync(copyRepresenterList, SelectionModel.MinimumFileSizeInBytes, SelectionModel.MaximumFileSizeInBytes ,SelectionModel.SelectedSizeInBytes, copiedFileList, SelectionModel.AvoidDuplicates, token);
         }
 
-        protected override Task<IListWithErrorDictionary<CopiedFile>> CopySpecificAsync(CancellationToken token)
+        protected override Task<IListWithErrorDictionary<MovedOrCopiedFile>> CopySpecificAsync(CancellationToken token)
         {
-            return Task.Run<IListWithErrorDictionary<CopiedFile>>(async () => {
-                var copiedList = new ListWithErrorDictionary<CopiedFile>();
+            return Task.Run<IListWithErrorDictionary<MovedOrCopiedFile>>(async () => {
+                var copiedList = new ListWithErrorDictionary<MovedOrCopiedFile>();
                 var selectedItems = Model.Items.Where(x => x.IsSelected).ToList();
                 Progress = 0;
                 MaxProgressBarValue = selectedItems.Count;
@@ -75,7 +76,24 @@ namespace RandomFileCopier.ViewModel
                     token.ThrowIfCancellationRequested();
                     Progress++;
                     await _folderCopier.DirectoryCopyAsync(file.Path, Model.DestinationPath, token);
-                    copiedList.Add(new CopiedFile(file.Path, file.Size, DateTime.Now));
+                    copiedList.Add(new MovedOrCopiedFile(file.Path, file.Size, DateTime.Now));
+                }
+                return copiedList;
+            });
+        }
+
+        protected override Task<IListWithErrorDictionary<MovedOrCopiedFile>> MoveSpecificAsync()
+        {
+            return Task.Run<IListWithErrorDictionary<MovedOrCopiedFile>>(() => {
+                var copiedList = new ListWithErrorDictionary<MovedOrCopiedFile>();
+                var selectedItems = Model.Items.Where(x => x.IsSelected).ToList();
+                Progress = 0;
+                MaxProgressBarValue = selectedItems.Count;
+                foreach (var file in selectedItems)
+                {
+                    Progress++;
+                    Directory.Move(file.Path, Path.Combine(Model.DestinationPath, file.Name));
+                    copiedList.Add(new MovedOrCopiedFile(file.Path, file.Size, DateTime.Now));
                 }
                 return copiedList;
             });

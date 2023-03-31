@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AudioFileTypes" xml:space="preserve">
     <value>Archivos de audio</value>
@@ -251,5 +251,23 @@
   </data>
   <data name="RemoveDuplicates" xml:space="preserve">
     <value>Remover duplicados</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copiar</value>
+  </data>
+  <data name="Cut" xml:space="preserve">
+    <value>Cortar</value>
+  </data>
+  <data name="CopyOrMoveOptions" xml:space="preserve">
+    <value>Opciones de movar o copiar</value>
+  </data>
+  <data name="Start Move" xml:space="preserve">
+    <value>Movar</value>
+  </data>
+  <data name="SomeFilesHaveNotBeenMoved" xml:space="preserve">
+    <value>Algunos archivos no han sido moviados! Asegúrese que el equipo no haya sido removido y que el programa se ejecute con los permisos correctos.</value>
+  </data>
+  <data name="SuccessMoved" xml:space="preserve">
+    <value>Todos los archivos han sido satisfactoriamente moviados!</value>
   </data>
 </root>

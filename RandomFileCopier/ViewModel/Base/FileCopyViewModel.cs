@@ -44,12 +44,14 @@ namespace RandomFileCopier.ViewModel.Base
         }
 
         protected abstract TCopyRepresenter CreateFileRepresenter(FileInfo fileInfo);
-        protected virtual Task CopySpecificAsync(TCopyRepresenter copyRepresenter, CancellationToken token) { return Task.FromResult<CopiedFile>(null); }
+        protected virtual Task CopySpecificAsync(TCopyRepresenter copyRepresenter, CancellationToken token) { return Task.CompletedTask; }
+        protected virtual void MoveSpecific(TCopyRepresenter copyRepresenter) {  }
 
-        protected override Task<IListWithErrorDictionary<CopiedFile>> CopySpecificAsync(CancellationToken token)
+
+        protected override Task<IListWithErrorDictionary<MovedOrCopiedFile>> CopySpecificAsync(CancellationToken token)
         {
-            return Task.Run<IListWithErrorDictionary<CopiedFile>>(async () => {
-                var copiedFileList = new ListWithErrorDictionary<CopiedFile>();
+            return Task.Run<IListWithErrorDictionary<MovedOrCopiedFile>>(async () => {
+                var copiedFileList = new ListWithErrorDictionary<MovedOrCopiedFile>();
                 var selectedFiles = Model.Items.Where(x => x.IsSelected).ToList();
 
                 MaxProgressBarValue = selectedFiles.Count;
@@ -69,8 +71,39 @@ namespace RandomFileCopier.ViewModel.Base
                                 await fileStream.CopyToAsync(destinationStream, 81920, token);
                             }
                         }
-                        copiedFileList.Add(new CopiedFile(file.Name, file.Size, DateTime.Now));
+                        copiedFileList.Add(new MovedOrCopiedFile(file.Name, file.Size, DateTime.Now));
                         await CopySpecificAsync(file, token);
+                    }
+                    catch (Exception exc) when (exc is UnauthorizedAccessException || exc is IOException)
+                    {
+                        copiedFileList.AddError(file.Path, exc.Message);
+                    } //swallow unauthorizedaccessexceptions
+                    index++;
+                }
+
+                return copiedFileList;
+            });
+        }
+        protected override Task<IListWithErrorDictionary<MovedOrCopiedFile>> MoveSpecificAsync()
+        {
+            return Task.Run<IListWithErrorDictionary<MovedOrCopiedFile>>(() => {
+                var copiedFileList = new ListWithErrorDictionary<MovedOrCopiedFile>();
+                var selectedFiles = Model.Items.Where(x => x.IsSelected).ToList();
+
+                MaxProgressBarValue = selectedFiles.Count;
+                Progress = 0;
+                var index = 0;
+                while (index < selectedFiles.Count)
+                {
+                    Progress++;
+                    var file = selectedFiles[index];
+                    try
+                    {
+                        var destinationFilePath = Path.Combine(Model.DestinationPath, file.Name);
+
+                        File.Move(file.Path, destinationFilePath);
+                        copiedFileList.Add(new MovedOrCopiedFile(file.Name, file.Size, DateTime.Now));
+                        MoveSpecific(file);
                     }
                     catch (Exception exc) when (exc is UnauthorizedAccessException || exc is IOException)
                     {

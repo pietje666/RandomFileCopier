@@ -19,7 +19,7 @@ namespace RandomFileCopier.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -111,6 +111,24 @@ namespace RandomFileCopier.Properties {
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string Copy {
+            get {
+                return ResourceManager.GetString("Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy or Move options.
+        /// </summary>
+        public static string CopyOrMoveOptions {
+            get {
+                return ResourceManager.GetString("CopyOrMoveOptions", resourceCulture);
             }
         }
         
@@ -228,6 +246,15 @@ namespace RandomFileCopier.Properties {
         public static string MinimumFileSize {
             get {
                 return ResourceManager.GetString("MinimumFileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move.
+        /// </summary>
+        public static string Move {
+            get {
+                return ResourceManager.GetString("Move", resourceCulture);
             }
         }
         
@@ -376,6 +403,15 @@ namespace RandomFileCopier.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Some files have not been moved! Make sure the device has not been removed and that the program is being run with the right permission..
+        /// </summary>
+        public static string SomeFilesHaveNotBeenMoved {
+            get {
+                return ResourceManager.GetString("SomeFilesHaveNotBeenMoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Woops! Something went wrong....
         /// </summary>
         public static string SomethingWentWrong {
@@ -403,6 +439,15 @@ namespace RandomFileCopier.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start Move.
+        /// </summary>
+        public static string StartMove {
+            get {
+                return ResourceManager.GetString("StartMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subtitle Path.
         /// </summary>
         public static string SubtitlePath {
@@ -417,6 +462,15 @@ namespace RandomFileCopier.Properties {
         public static string Success {
             get {
                 return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All files have been sucessfully moved!.
+        /// </summary>
+        public static string SuccessMove {
+            get {
+                return ResourceManager.GetString("SuccessMove", resourceCulture);
             }
         }
         

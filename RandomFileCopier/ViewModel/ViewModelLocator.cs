@@ -16,7 +16,7 @@ namespace RandomFileCopier.ViewModel
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-                      
+
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<IDialogService, DialogService>();

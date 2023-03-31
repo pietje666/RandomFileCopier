@@ -16,7 +16,7 @@ namespace RandomFileCopier.Models.Base
             _folderValidator = folderValidator ?? new FolderValidator();            
             IncludeSubDirectories = true;
             SelectedExtensions = new ObservableCollection<string>(extensions ?? new List<string>());
-            
+            MoveOrCopyOptions = MoveOrCopyOptions.Copy;
             Items = new ObservableCollection<TCopyRepresenter>();
         }      
 
@@ -96,6 +96,15 @@ namespace RandomFileCopier.Models.Base
             get { return _selectedExtensions; }
             set { _selectedExtensions = value; RaisePropertyChanged(); }
         }
+
+        private MoveOrCopyOptions _moveOrCopyOptions;
+
+        public MoveOrCopyOptions MoveOrCopyOptions
+        {
+            get { return _moveOrCopyOptions; }
+            set { _moveOrCopyOptions = value; RaisePropertyChanged(); }
+        }
+
 
     }
 }
