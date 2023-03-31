@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using RandomFileCopier.Helpers;
 
 namespace RandomFileCopier.Models.Selection.Base
@@ -15,7 +15,7 @@ namespace RandomFileCopier.Models.Selection.Base
         private readonly UnitSize _unitSize;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification ="RaisepropertyChanged not overriden")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification ="OnPropertyChanged not overriden")]
         public SelectionModel(double minimumFileSize, double maximumFileSize, UnitSize unitSize)
         {
             AvoidPreviousCopied = true;
@@ -31,7 +31,7 @@ namespace RandomFileCopier.Models.Selection.Base
             get { return _selectedSize; }
             set
             {
-                _selectedSize = value; RaisePropertyChanged();
+                _selectedSize = value; OnPropertyChanged();
             }
         }
 
@@ -47,7 +47,7 @@ namespace RandomFileCopier.Models.Selection.Base
             {
                 _minimumFileSize = value;
                 MinimumFileSizeInBytes = CalculateSizeInBytes(MinimumFileSize);
-                RaisePropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -61,7 +61,7 @@ namespace RandomFileCopier.Models.Selection.Base
             {
                 _maximumFileSize = value; 
                 _maximumFileSizeInBytes = CalculateSizeInBytes(MaximumFileSize);
-                RaisePropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -71,7 +71,7 @@ namespace RandomFileCopier.Models.Selection.Base
         public long MinimumFileSizeInBytes
         {
             get { return _minimumFileSizeInBytes; }
-            set { _minimumFileSizeInBytes = value; RaisePropertyChanged(); }
+            set { _minimumFileSizeInBytes = value; OnPropertyChanged(); }
         }
 
         private long _maximumFileSizeInBytes;
@@ -80,7 +80,7 @@ namespace RandomFileCopier.Models.Selection.Base
         public long MaximumFileSizeInBytes
         {
             get { return _maximumFileSizeInBytes; }
-            set { _maximumFileSizeInBytes = value; RaisePropertyChanged(); }
+            set { _maximumFileSizeInBytes = value; OnPropertyChanged(); }
         }
 
         private bool _avoidPreviousCopied;
@@ -89,7 +89,7 @@ namespace RandomFileCopier.Models.Selection.Base
         public bool AvoidPreviousCopied
         {
             get { return _avoidPreviousCopied; }
-            set { _avoidPreviousCopied = value; RaisePropertyChanged(); }
+            set { _avoidPreviousCopied = value; OnPropertyChanged(); }
         }
 
         private bool _removeDuplicates;
@@ -97,7 +97,7 @@ namespace RandomFileCopier.Models.Selection.Base
         public bool AvoidDuplicates
         {
             get { return _removeDuplicates; }
-            set { _removeDuplicates = value; RaisePropertyChanged(); }
+            set { _removeDuplicates = value; OnPropertyChanged(); }
         }
 
 

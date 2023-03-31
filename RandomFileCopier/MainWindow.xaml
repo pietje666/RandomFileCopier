@@ -4,13 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RandomFileCopier"
-        xmlns:extendedToolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+        xmlns:extendedToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:converters="clr-namespace:RandomFileCopier.Converters"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:enums="clr-namespace:RandomFileCopier.Models"
         xmlns:helpers="clr-namespace:RandomFileCopier.Helpers"
         xmlns:controls="clr-namespace:RandomFileCopier.Controls" 
-        xmlns:light="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+        xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         xmlns:resx="clr-namespace:RandomFileCopier.Properties"
@@ -320,18 +320,17 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Slider Margin="0 5 0 0"  Value="{Binding SelectionModel.SelectedSize, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, ValidatesOnNotifyDataErrors=False}" Grid.Column="0" IsSnapToTickEnabled="True" TickFrequency="0.1" Minimum="0.1" Maximum="{Binding Model.MaxDestinationSize, UpdateSourceTrigger=PropertyChanged}">
-                            
-                            <i:Interaction.Triggers>
+                            <Behaviors:Interaction.Triggers>
                                 <helpers:RoutedEventTrigger RoutedEvent="Thumb.DragCompleted">
-                                    <light:EventToCommand Command="{Binding Mode=OneWay, Path=SliderDragCompletedCommand}"/>
+                                    <Behaviors:EventToCommand Command="{Binding Mode=OneWay, Path=SliderDragCompletedCommand}"/>
                                 </helpers:RoutedEventTrigger>
                                 <helpers:RoutedEventTrigger RoutedEvent="Thumb.DragStarted">
-                                    <light:EventToCommand Command="{Binding Mode=OneWay, Path=SliderDragStartedCommand}"/>
+                                    <Behaviors:EventToCommand Command="{Binding Mode=OneWay, Path=SliderDragStartedCommand}"/>
                                 </helpers:RoutedEventTrigger>
-                                <i:EventTrigger EventName="ValueChanged">
-                                    <light:EventToCommand Command="{Binding Mode=OneWay, Path=SliderValueChangedCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
+                                <Behaviors:EventTrigger EventName="ValueChanged">
+                                    <Behaviors:EventToCommand Command="{Binding Mode=OneWay, Path=SliderValueChangedCommand}"/>
+                                </Behaviors:EventTrigger>
+                            </Behaviors:Interaction.Triggers>
                         </Slider>
                         <extendedToolkit:DecimalUpDown Margin="5 0 0 0" AllowSpin="False" ShowButtonSpinner="False" Value="{Binding SelectionModel.SelectedSize,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:0.##}}" Increment="0.1" Grid.Column="1" Width="100" Minimum="0" Maximum="{Binding Model.MaxDestinationSize, UpdateSourceTrigger=PropertyChanged}" FormatString="F1"/>
                         <Label Grid.Column="2">GB</Label>

@@ -7,7 +7,7 @@
              xmlns:resx="clr-namespace:RandomFileCopier.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             xmlns:xceed="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             xmlns:xceed="clr-namespace:Xceed.Wpf.Toolkit;assembly=Extended.Wpf.Toolkit"
              Name="MinMaxControlName">
     
     <Grid>

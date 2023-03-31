@@ -16,7 +16,7 @@ namespace RandomFileCopier.Models
         public IEnumerable<string> SubtitlePaths
         {
             get { return _subtitlePaths; }
-            set { _subtitlePaths = value; RaisePropertyChanged(); }
+            set { _subtitlePaths = value; OnPropertyChanged(); }
         }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public string SubtitlePath

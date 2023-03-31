@@ -42,7 +42,7 @@ namespace RandomFileCopier.Models.Base
             {
                 Validate(value, _folderValidator);
                 _sourcePath = value;
-                RaisePropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -55,7 +55,7 @@ namespace RandomFileCopier.Models.Base
             {
                 Validate(value, _folderValidator);
                 _destinationpath = value;
-                RaisePropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -64,7 +64,7 @@ namespace RandomFileCopier.Models.Base
         public double MaxDestinationSize
         {
             get { return _maxDestinationSize; }
-            set { _maxDestinationSize = value; RaisePropertyChanged(); }
+            set { _maxDestinationSize = value; OnPropertyChanged(); }
         }
 
 
@@ -74,7 +74,7 @@ namespace RandomFileCopier.Models.Base
         public bool IncludeSubDirectories
         {
             get { return _includeSubDirectories; }
-            set { _includeSubDirectories = value; RaisePropertyChanged(); }
+            set { _includeSubDirectories = value; OnPropertyChanged(); }
         }
 
         private ObservableCollection<TCopyRepresenter> _items;
@@ -85,7 +85,7 @@ namespace RandomFileCopier.Models.Base
             set
             {
                 _items = value;
-                RaisePropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -94,7 +94,7 @@ namespace RandomFileCopier.Models.Base
         public ObservableCollection<string> SelectedExtensions
         {
             get { return _selectedExtensions; }
-            set { _selectedExtensions = value; RaisePropertyChanged(); }
+            set { _selectedExtensions = value; OnPropertyChanged(); }
         }
 
         private MoveOrCopyOptions _moveOrCopyOptions;
@@ -102,7 +102,7 @@ namespace RandomFileCopier.Models.Base
         public MoveOrCopyOptions MoveOrCopyOptions
         {
             get { return _moveOrCopyOptions; }
-            set { _moveOrCopyOptions = value; RaisePropertyChanged(); }
+            set { _moveOrCopyOptions = value; OnPropertyChanged(); }
         }
 
 

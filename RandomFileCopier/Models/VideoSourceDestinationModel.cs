@@ -19,7 +19,7 @@ namespace RandomFileCopier.Models
         public bool IncludeSubtitles
         {
             get { return _includeSubTitles; }
-            set { _includeSubTitles = value; RaisePropertyChanged(); }
+            set { _includeSubTitles = value; OnPropertyChanged(); }
         }
     }
 }

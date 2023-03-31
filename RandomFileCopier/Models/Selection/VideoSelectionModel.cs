@@ -22,7 +22,7 @@ namespace RandomFileCopier.Models.Selection
             set
             {
                 _videosWithSubtitlesOnly = value;
-                RaisePropertyChanged();
+                OnPropertyChanged();
             }
         }
     }

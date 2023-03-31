@@ -1,5 +1,5 @@
 using CommonServiceLocator;
-using GalaSoft.MvvmLight.Ioc;
+using CommunityToolkit.Mvvm.ComponentModel.Ioc;
 using RandomFileCopier.Dialogs;
 
 namespace RandomFileCopier.ViewModel

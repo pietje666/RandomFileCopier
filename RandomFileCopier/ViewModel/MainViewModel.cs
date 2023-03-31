@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using GalaSoft.MvvmLight;
+using CommunityToolkit.Mvvm.ComponentModel;
 using RandomFileCopier.Models;
 using RandomFileCopier.ViewModel.Base;
 
@@ -7,7 +7,7 @@ namespace RandomFileCopier.ViewModel
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instantiated from xaml")]
     class MainViewModel
-        : ViewModelBase
+        : ObservableRecipient
     {
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -46,7 +46,7 @@ namespace RandomFileCopier.ViewModel
             {
                 _mediaType = value;
                 SetViewModel();
-                RaisePropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -55,7 +55,7 @@ namespace RandomFileCopier.ViewModel
         public IHasDataContextSwitchingMethods ViewModel
         {
             get { return _viewModel; }
-            set { _viewModel = value; RaisePropertyChanged(); }
+            set { _viewModel = value; OnPropertyChanged(); }
         }
 
         public Dictionary<MediaType, IHasDataContextSwitchingMethods> ViewModelsByMediaType { get; private set; }

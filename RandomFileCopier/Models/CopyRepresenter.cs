@@ -1,5 +1,5 @@
 ﻿using System;
-using GalaSoft.MvvmLight;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace RandomFileCopier.Models
 {
@@ -21,7 +21,7 @@ namespace RandomFileCopier.Models
         public string Path
         {
             get { return _path; }
-            set { _path = value; RaisePropertyChanged(); }
+            set { _path = value; OnPropertyChanged(); }
         }
 
         private string _name;
@@ -29,7 +29,7 @@ namespace RandomFileCopier.Models
         public string Name
         {
             get { return _name; }
-            set { _name = value; RaisePropertyChanged(); }
+            set { _name = value; OnPropertyChanged(); }
         }
 
         private long _size;
@@ -40,7 +40,7 @@ namespace RandomFileCopier.Models
             set
             {
                 _size = value;
-                RaisePropertyChanged();
+                OnPropertyChanged();
                 SizeInMB = (Size / 1024.0) / 1024.0;
                 SizeInGB = ((Size / 1024.0) / 1024.0) / 1024.0;
             }
@@ -52,7 +52,7 @@ namespace RandomFileCopier.Models
         public double SizeInMB
         {
             get { return _sizeInMB; }
-            set { _sizeInMB = value; RaisePropertyChanged(); }
+            set { _sizeInMB = value; OnPropertyChanged(); }
         }
 
         private double _sizeInGb;
@@ -60,7 +60,7 @@ namespace RandomFileCopier.Models
         public double SizeInGB
         {
             get { return _sizeInGb; }
-            set { _sizeInGb = value; RaisePropertyChanged(); }
+            set { _sizeInGb = value; OnPropertyChanged(); }
         }
 
         public Guid Guid { get; set; }
@@ -70,7 +70,7 @@ namespace RandomFileCopier.Models
         public bool IsSelected
         {
             get { return _isSelected; }
-            set { _isSelected = value; RaisePropertyChanged(); }
+            set { _isSelected = value; OnPropertyChanged(); }
         }
 
     }

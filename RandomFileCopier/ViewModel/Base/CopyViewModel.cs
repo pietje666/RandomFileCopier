@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.CommandWpf;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using RandomFileCopier.Dialogs;
 using RandomFileCopier.Helpers;
 using RandomFileCopier.Logic.Helper;
@@ -21,7 +21,7 @@ namespace RandomFileCopier.ViewModel.Base
 {
 
     internal abstract class CopyViewModel<TModel, TSelectionModel, TCopyRepresenter>
-            : ViewModelBase, IDisposable, IHasDataContextSwitchingMethods
+            : ObservableRecipient, IDisposable, IHasDataContextSwitchingMethods
         where TModel : SourceDestinationModel<TCopyRepresenter>
         where TCopyRepresenter : CopyRepresenter
         where TSelectionModel : SelectionModel
@@ -57,7 +57,7 @@ namespace RandomFileCopier.ViewModel.Base
 
             BrowseSourceCommand = new RelayCommand(() =>
             {
-                Model.RaisePropertyChanged(nameof(Model.SelectedExtensions));
+                Model.SelectedExtensions = Model.SelectedExtensions; // trigger propertychanged...
                 Model.SourcePath = _openerHelper.OpenDestinationFileDialog(true);
             });
             BrowseDestinationCommand = new RelayCommand(() => Model.DestinationPath = _openerHelper.OpenDestinationFileDialog());
@@ -77,7 +77,7 @@ namespace RandomFileCopier.ViewModel.Base
         private async Task MoveAsync()
         {
             IsBusyMoving = true;
-            FindFilesCommand.RaiseCanExecuteChanged();
+            FindFilesCommand.NotifyCanExecuteChanged();
             IListWithErrorDictionary<MovedOrCopiedFile> movedFiles = null;
             try
             {
@@ -88,10 +88,10 @@ namespace RandomFileCopier.ViewModel.Base
             {
                 Model.Items.Clear();
                 IsBusyMoving = false;
-                FindFilesCommand.RaiseCanExecuteChanged();
+                FindFilesCommand.NotifyCanExecuteChanged();
             }
             ShowCopyFinishedMessage(movedFiles != null && !movedFiles.Errors.Any(), Resources.SuccessMove , Resources.SomeFilesHaveNotBeenMoved );
-            MoveCommand.RaiseCanExecuteChanged();
+            MoveCommand.NotifyCanExecuteChanged();
         }
 
         public RelayCommand BrowseSourceCommand { get; private set; }
@@ -184,11 +184,11 @@ namespace RandomFileCopier.ViewModel.Base
         }
 
         private void HandleSelectionClicked()
-        {
-            RaisePropertyChanged(() => SelectedFilesCount);
+        {            
+            OnPropertyChanged(nameof(SelectedFilesCount));
             CalculateTotalSelectedSize();
-            CopyCommand.RaiseCanExecuteChanged();
-            MoveCommand.RaiseCanExecuteChanged();
+            CopyCommand.NotifyCanExecuteChanged();
+            MoveCommand.NotifyCanExecuteChanged();
         }
 
         protected Task FindFilesAsync()
@@ -198,8 +198,8 @@ namespace RandomFileCopier.ViewModel.Base
                  if (!Model.HasErrors)
                  {
                      Dispatcher.Invoke(() => IsBusySearching = true);
-                     Dispatcher.Invoke(CopyCommand.RaiseCanExecuteChanged);
-                     Dispatcher.Invoke(MoveCommand.RaiseCanExecuteChanged);
+                     Dispatcher.Invoke(CopyCommand.NotifyCanExecuteChanged);
+                     Dispatcher.Invoke(MoveCommand.NotifyCanExecuteChanged);
 
 
                      _searchCancellationTokenSource = new CancellationTokenSource();
@@ -219,11 +219,11 @@ namespace RandomFileCopier.ViewModel.Base
                              CollectionViewSourceItems.Refresh();
                          });
 
-                         RaisePropertyChanged(() => SelectedFilesCount);
+                         OnPropertyChanged(nameof(SelectedFilesCount));
                          CalculateTotalSelectedSize();
                          IsBusySearching = false;
-                         Dispatcher.Invoke(CopyCommand.RaiseCanExecuteChanged);
-                         Dispatcher.Invoke(MoveCommand.RaiseCanExecuteChanged);
+                         Dispatcher.Invoke(CopyCommand.NotifyCanExecuteChanged);
+                         Dispatcher.Invoke(MoveCommand.NotifyCanExecuteChanged);
 
                      }
                  }
@@ -267,7 +267,7 @@ namespace RandomFileCopier.ViewModel.Base
                 }
             }
 
-            Model.RaisePropertyChanged(nameof(Model.SelectedExtensions));
+            Model.SelectedExtensions = Model.SelectedExtensions;//trigger propertychanged..
         }
 
         private bool CanFindFiles()
@@ -301,7 +301,7 @@ namespace RandomFileCopier.ViewModel.Base
         private async Task CopyAsync()
         {
             IsBusyCopying = true;
-            FindFilesCommand.RaiseCanExecuteChanged();
+            FindFilesCommand.NotifyCanExecuteChanged();
             _copyCancellationTokenSource = new CancellationTokenSource();
             IListWithErrorDictionary<MovedOrCopiedFile> copiedFiles = null;
             var cancelled = false;
@@ -322,8 +322,8 @@ namespace RandomFileCopier.ViewModel.Base
             {
                 Model.Items.Clear();
                 IsBusyCopying = false;
-                FindFilesCommand.RaiseCanExecuteChanged();
-                CopyCommand.RaiseCanExecuteChanged();
+                FindFilesCommand.NotifyCanExecuteChanged();
+                CopyCommand.NotifyCanExecuteChanged();
             }
 
             if (!cancelled)
@@ -360,11 +360,11 @@ namespace RandomFileCopier.ViewModel.Base
             var propertyName = e.PropertyName;
             if ((propertyName == nameof(Model.SourcePath) && Model.SourcePath != null && !Model.HasPropertyErrors(nameof(Model.SourcePath))))
             {
-                FindFilesCommand.RaiseCanExecuteChanged();
+                FindFilesCommand.NotifyCanExecuteChanged();
             }
             else if (propertyName == nameof(Model.DestinationPath) && Model.DestinationPath != null && !Model.HasPropertyErrors(nameof(Model.DestinationPath)))
             {
-                FindFilesCommand.RaiseCanExecuteChanged();
+                FindFilesCommand.NotifyCanExecuteChanged();
                 CalculateNewMaxDestinationSize();
                 PreviouslyCopiedFileList = _serializationHelper.GetCopiedFileList(Model.DestinationPath);
             }
@@ -395,7 +395,7 @@ namespace RandomFileCopier.ViewModel.Base
         public double TotalSelectedSize
         {
             get { return _totalSelectedSize; }
-            set { _totalSelectedSize = value; RaisePropertyChanged(); }
+            set { _totalSelectedSize = value; OnPropertyChanged(); }
         }
 
         private Brush _selectedSizeColor;
@@ -403,7 +403,7 @@ namespace RandomFileCopier.ViewModel.Base
         public Brush SelectedSizeColor
         {
             get { return _selectedSizeColor; }
-            set { _selectedSizeColor = value; RaisePropertyChanged(); }
+            set { _selectedSizeColor = value; OnPropertyChanged(); }
         }
 
         private bool _isBusySearching;
@@ -411,7 +411,7 @@ namespace RandomFileCopier.ViewModel.Base
         public bool IsBusySearching
         {
             get { return _isBusySearching; }
-            set { _isBusySearching = value; RaisePropertyChanged(); }
+            set { _isBusySearching = value; OnPropertyChanged(); }
         }
 
         private bool _isBusyCopying;
@@ -419,7 +419,7 @@ namespace RandomFileCopier.ViewModel.Base
         public bool IsBusyCopying
         {
             get { return _isBusyCopying; }
-            set { _isBusyCopying = value; RaisePropertyChanged(); }
+            set { _isBusyCopying = value; OnPropertyChanged(); }
         }
 
         private bool _isBusyMoving;
@@ -427,7 +427,7 @@ namespace RandomFileCopier.ViewModel.Base
         public bool IsBusyMoving
         {
             get { return _isBusyMoving; }
-            set { _isBusyMoving = value; RaisePropertyChanged(); }
+            set { _isBusyMoving = value; OnPropertyChanged(); }
         }
 
 
@@ -436,7 +436,7 @@ namespace RandomFileCopier.ViewModel.Base
         public int Progress
         {
             get { return _progress; }
-            set { _progress = value; RaisePropertyChanged(); }
+            set { _progress = value; OnPropertyChanged(); }
         }
 
         private int _maxProgressBarValue;
@@ -444,7 +444,7 @@ namespace RandomFileCopier.ViewModel.Base
         public int MaxProgressBarValue
         {
             get { return _maxProgressBarValue; }
-            set { _maxProgressBarValue = value; RaisePropertyChanged(); }
+            set { _maxProgressBarValue = value; OnPropertyChanged(); }
         }
 
         private TModel _model;
@@ -456,7 +456,7 @@ namespace RandomFileCopier.ViewModel.Base
             {
                 _model = value;
                 OnModelSet();
-                RaisePropertyChanged();
+                OnPropertyChanged();
 #if DEBUG
                 var count = System.Environment.ProcessorCount;
                 if (count == 8)
@@ -482,7 +482,7 @@ namespace RandomFileCopier.ViewModel.Base
             {
                 _selectionModel = value;
                 OnSelectionModelSet();
-                RaisePropertyChanged();
+                OnPropertyChanged();
             }
         }
 
