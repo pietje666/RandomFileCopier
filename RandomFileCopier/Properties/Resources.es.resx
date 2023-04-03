@@ -270,4 +270,7 @@
   <data name="SuccessMoved" xml:space="preserve">
     <value>Todos los archivos han sido satisfactoriamente moviados!</value>
   </data>
+  <data name="ProcessingMoveFiles" xml:space="preserve">
+    <value>Moviando {0}/{1}</value>
+  </data>
 </root>

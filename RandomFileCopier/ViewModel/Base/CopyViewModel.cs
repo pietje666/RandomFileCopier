@@ -31,6 +31,7 @@ namespace RandomFileCopier.ViewModel.Base
         private bool _dragStarted;
         private List<string> _selectedExtensionsBackup;
         private SortDescription[] _backupSortDescriptors;
+        private CancellationTokenSource _moveCancellationTokenSource;
         private CancellationTokenSource _copyCancellationTokenSource;
         private CancellationTokenSource _searchCancellationTokenSource;
         private CancellationTokenSource _reselectFilesCancellationTokenSource;
@@ -66,6 +67,7 @@ namespace RandomFileCopier.ViewModel.Base
             FindFilesCommand = new AsyncRelayCommand(FindFilesAsync, CanFindFiles);
             CancelFindFilesCommand = new RelayCommand(() => _searchCancellationTokenSource.Cancel(), () => IsBusySearching);
             CancelCopyCommand = new RelayCommand(() => _copyCancellationTokenSource.Cancel(), () => IsBusyCopying);
+            CancelMoveCommand = new RelayCommand(() => _moveCancellationTokenSource.Cancel(), () => _isBusyMoving);
             SelectionClicked = new RelayCommand(HandleSelectionClicked);
             SliderDragCompletedCommand = new RelayCommand(SliderDragCompletedHandler);
             SliderDragStartedCommand = new RelayCommand(SliderDragStartedHandler);
@@ -73,27 +75,7 @@ namespace RandomFileCopier.ViewModel.Base
             OpenFolderCommand = new RelayCommand(() => _openerHelper.OpenFolderHandler(SelectedItem), () => SelectedItem != null);
             RefreshSelectionCommand = new RelayCommand(() => ReSelectRandomFiles(Model.Items));
         }
-
-        private async Task MoveAsync()
-        {
-            IsBusyMoving = true;
-            FindFilesCommand.RaiseCanExecuteChanged();
-            IListWithErrorDictionary<MovedOrCopiedFile> movedFiles = null;
-            try
-            {
-                movedFiles = await MoveSpecificAsync();
-
-            }          
-            finally
-            {
-                Model.Items.Clear();
-                IsBusyMoving = false;
-                FindFilesCommand.RaiseCanExecuteChanged();
-            }
-            ShowCopyFinishedMessage(movedFiles != null && !movedFiles.Errors.Any(), Resources.SuccessMove , Resources.SomeFilesHaveNotBeenMoved );
-            MoveCommand.RaiseCanExecuteChanged();
-        }
-
+        
         public RelayCommand BrowseSourceCommand { get; private set; }
         public RelayCommand BrowseDestinationCommand { get; private set; }
         public AsyncRelayCommand FindFilesCommand { get; private set; }
@@ -105,6 +87,7 @@ namespace RandomFileCopier.ViewModel.Base
         public RelayCommand SliderDragStartedCommand { get; private set; }
         public RelayCommand SliderValueChangedCommand { get; private set; }
         public RelayCommand CancelCopyCommand { get; private set; }
+        public RelayCommand CancelMoveCommand { get; private set; }
         public RelayCommand OpenFolderCommand { get; private set; }
         public RelayCommand RefreshSelectionCommand { get; private set; }
         public RelayCommand SliderLoadedCommand { get; private set; }
@@ -112,7 +95,7 @@ namespace RandomFileCopier.ViewModel.Base
 
         protected abstract Task SelectRandomFilesAsync(IEnumerable<TCopyRepresenter> copyRepresenterList, IEnumerable<MovedOrCopiedFile> copiedFileList, CancellationToken token);
         protected abstract Task SpecificSearchAsync(string path, CancellationToken token);
-        protected abstract Task<IListWithErrorDictionary<MovedOrCopiedFile>> MoveSpecificAsync();
+        protected abstract Task<IListWithErrorDictionary<MovedOrCopiedFile>> MoveSpecificAsync(CancellationToken token);
         protected abstract Task<IListWithErrorDictionary<MovedOrCopiedFile>> CopySpecificAsync(CancellationToken token);
 
         protected virtual void OnSelectionModelPropertyChanged(object sender, PropertyChangedEventArgs e) { }
@@ -320,15 +303,53 @@ namespace RandomFileCopier.ViewModel.Base
             }
             finally
             {
-                Model.Items.Clear();
-                IsBusyCopying = false;
-                FindFilesCommand.RaiseCanExecuteChanged();
-                CopyCommand.RaiseCanExecuteChanged();
+                ResetModels();
             }
 
             if (!cancelled)
             {
                 ShowCopyFinishedMessage(copiedFiles != null && !copiedFiles.Errors.Any(), Resources.Success, Resources.SomeFilesHaveNotBeenCopied);
+            }
+        }
+
+        private void ResetModels()
+        {
+            Model.Items.Clear();
+            SelectionModel.SelectedSize = 0;
+            RaisePropertyChanged(nameof(SelectedFilesCount));
+            TotalSelectedSize = 0;
+            IsBusyCopying = false;
+            IsBusyMoving = false;
+            FindFilesCommand.RaiseCanExecuteChanged();
+            CopyCommand.RaiseCanExecuteChanged();
+            MoveCommand.RaiseCanExecuteChanged();
+        }
+
+        private async Task MoveAsync()
+        {
+            IsBusyMoving = true;
+            FindFilesCommand.RaiseCanExecuteChanged();
+            IListWithErrorDictionary<MovedOrCopiedFile> movedFiles = null;
+            _moveCancellationTokenSource = new CancellationTokenSource();
+
+            var cancelled = false;
+
+            try
+            {
+                movedFiles = await MoveSpecificAsync(_moveCancellationTokenSource.Token);
+
+            }
+            catch (TaskCanceledException)
+            {
+                cancelled = true;
+            }
+            finally
+            {
+                ResetModels();
+            }
+            if (!cancelled)
+            {
+                ShowCopyFinishedMessage(movedFiles != null && !movedFiles.Errors.Any(), Resources.SuccessMove, Resources.SomeFilesHaveNotBeenMoved);
             }
         }
 
@@ -490,6 +511,7 @@ namespace RandomFileCopier.ViewModel.Base
         {
             if (disposing)
             {
+                _moveCancellationTokenSource.Dispose();
                 _searchCancellationTokenSource?.Dispose();
                 _copyCancellationTokenSource?.Dispose();
             }

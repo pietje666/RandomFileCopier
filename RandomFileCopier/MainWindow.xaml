@@ -21,6 +21,7 @@
         Name="RootWindow">
     <!--Test codeplex main remote-->
     <Window.Resources>
+        <converters:InvertedMultiBoolValueConverters x:Key="InvertedMultiBoolValueConverters"/>
         <helpers:BindingProxy x:Key="proxy" Data="{Binding}"/>
         <converters:EnumToBooleanConverter x:Key="EnumToBoolConverter"/>
         <converters:ValueConverterGroup x:Key="EnumToVisibilityConverter">
@@ -272,7 +273,13 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <!--Source-->
-        <Grid Name="SourceGrid" Grid.Row="0" IsEnabled="{Binding IsBusyCopying, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InvertedBooleanConverter}}">
+        <Grid Name="SourceGrid" Grid.Row="0" >
+            <Grid.IsEnabled>
+                <MultiBinding  Converter="{StaticResource InvertedMultiBoolValueConverters}">
+                    <Binding Path="IsBusyCopying" UpdateSourceTrigger="PropertyChanged"/>
+                    <Binding Path="IsBusyMoving" UpdateSourceTrigger="PropertyChanged"/>
+                </MultiBinding>
+            </Grid.IsEnabled>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -368,6 +375,16 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <Button Grid.Row="0"  Content="{x:Static resx:Resources.Cancel}"  Command="{Binding CancelMoveCommand}"/>
+                    <ProgressBar Name="MoveProgressBar" Margin="0 5 0 0" Grid.Row="1" Height="20" IsIndeterminate="True"/>
+                    <TextBlock Margin="{Binding Margin, ElementName=MoveProgressBar}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{x:Static resx:Resources.ProcessingMoveFiles}">
+                                <Binding Path="Progress"/>
+                                <Binding Path="MaxProgressBarValue"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
                 </Grid>
             </Grid>
         </Border>
