@@ -204,6 +204,9 @@
   <data name="ProcessingFiles" xml:space="preserve">
     <value>Copying {0}/{1}</value>
   </data>
+	<data name="ProcessingMoveFiles" xml:space="preserve">
+    <value>Moving {0}/{1}</value>
+  </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>Open Folder in File Explorer</value>
   </data>

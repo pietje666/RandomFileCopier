@@ -331,6 +331,15 @@ namespace RandomFileCopier.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Moving {0}/{1}.
+        /// </summary>
+        public static string ProcessingMoveFiles {
+            get {
+                return ResourceManager.GetString("ProcessingMoveFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Refresh.
         /// </summary>
         public static string Refresh {

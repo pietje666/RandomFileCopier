@@ -84,7 +84,8 @@ namespace RandomFileCopier.ViewModel.Base
                 return copiedFileList;
             });
         }
-        protected override Task<IListWithErrorDictionary<MovedOrCopiedFile>> MoveSpecificAsync()
+
+        protected override Task<IListWithErrorDictionary<MovedOrCopiedFile>> MoveSpecificAsync(CancellationToken token)
         {
             return Task.Run<IListWithErrorDictionary<MovedOrCopiedFile>>(() => {
                 var copiedFileList = new ListWithErrorDictionary<MovedOrCopiedFile>();
@@ -95,12 +96,13 @@ namespace RandomFileCopier.ViewModel.Base
                 var index = 0;
                 while (index < selectedFiles.Count)
                 {
+                    Dispatcher.Invoke(() => token.ThrowIfCancellationRequested());
                     Progress++;
                     var file = selectedFiles[index];
                     try
                     {
                         var destinationFilePath = Path.Combine(Model.DestinationPath, file.Name);
-
+                        
                         File.Move(file.Path, destinationFilePath);
                         copiedFileList.Add(new MovedOrCopiedFile(file.Name, file.Size, DateTime.Now));
                         MoveSpecific(file);

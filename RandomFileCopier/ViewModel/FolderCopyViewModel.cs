@@ -82,7 +82,7 @@ namespace RandomFileCopier.ViewModel
             });
         }
 
-        protected override Task<IListWithErrorDictionary<MovedOrCopiedFile>> MoveSpecificAsync()
+        protected override Task<IListWithErrorDictionary<MovedOrCopiedFile>> MoveSpecificAsync(CancellationToken token)
         {
             return Task.Run<IListWithErrorDictionary<MovedOrCopiedFile>>(() => {
                 var copiedList = new ListWithErrorDictionary<MovedOrCopiedFile>();
@@ -91,8 +91,12 @@ namespace RandomFileCopier.ViewModel
                 MaxProgressBarValue = selectedItems.Count;
                 foreach (var file in selectedItems)
                 {
+                    Dispatcher.Invoke(() => token.ThrowIfCancellationRequested());
                     Progress++;
-                    Directory.Move(file.Path, Path.Combine(Model.DestinationPath, file.Name));
+                    //visualbasic since the c# move doesnt allow moving accross different volumes => usb etc... 
+                    //the visualbasic one does a copy and delete behind the scenes, dont want to be busy writing it myself...
+                    Microsoft.VisualBasic.FileIO.FileSystem.MoveDirectory(file.Path, Path.Combine(Model.DestinationPath, file.Name));
+
                     copiedList.Add(new MovedOrCopiedFile(file.Path, file.Size, DateTime.Now));
                 }
                 return copiedList;
