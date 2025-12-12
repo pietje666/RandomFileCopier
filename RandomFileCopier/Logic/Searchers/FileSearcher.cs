@@ -27,6 +27,7 @@ namespace RandomFileCopier.Logic
                 if (searchOption == SearchOption.AllDirectories)
                 {
                     dirFiles = directeryInfo.EnumerateDirectories("*")
+                                        .Where(d => !IsInRecycleBin(d.FullName))
                                         .SelectMany(x => SearchFiles(x.FullName, extensions, searchOption, cancellationToken));
                 }
                 var directoryInfo2 = new DirectoryInfo(path);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -9,7 +10,7 @@ namespace RandomFileCopier.Logic
     {
         private bool IsInRecycleBin(string folderPath)
         {
-            return folderPath.IndexOf("$RECYCLE.BIN", System.StringComparison.OrdinalIgnoreCase) >= 0;
+            return folderPath.IndexOf("$RECYCLE.BIN", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         public IEnumerable<DirectoryInfo> SearchFolders(string path)
