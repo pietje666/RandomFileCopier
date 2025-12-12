@@ -12,6 +12,10 @@ namespace RandomFileCopier.Logic
     /// </summary>
     class FileSearcher : IFileSearcher
     {
+        private bool IsInRecycleBin(string filePath)
+        {
+            return filePath.IndexOf("$RECYCLE.BIN", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
 
         public IEnumerable<FileInfo> SearchFiles(string path, IEnumerable<string> extensions, SearchOption searchOption, CancellationToken cancellationToken)
         {
@@ -23,10 +27,12 @@ namespace RandomFileCopier.Logic
                 if (searchOption == SearchOption.AllDirectories)
                 {
                     dirFiles = directeryInfo.EnumerateDirectories("*")
+                                        .Where(d => !IsInRecycleBin(d.FullName))
                                         .SelectMany(x => SearchFiles(x.FullName, extensions, searchOption, cancellationToken));
                 }
                 var directoryInfo2 = new DirectoryInfo(path);
-                return dirFiles.Concat(directoryInfo2.EnumerateFiles("*").Where(x => extensions.Contains(x.Extension)));
+                return dirFiles.Concat(directoryInfo2.EnumerateFiles("*")
+                    .Where(x => extensions.Contains(x.Extension) && !IsInRecycleBin(x.FullName)));
             }
             catch (Exception exc) when (exc is UnauthorizedAccessException || exc is SecurityException)
             {
