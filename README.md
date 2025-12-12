@@ -29,3 +29,6 @@ A usecase i often use it for is to move many files to a single folder. For insta
 ![Smartscreen1](/../gh-pages/assets/installation/Smartscreencutted.PNG?raw=true)
 ![Smartscreen2](/../gh-pages/assets/installation/Smartscreen2Cutted.PNG?raw=true)
 
+# Tips and Tricks
+Missing extensions? => you can change the RandomFileCopier.exe.config files with notepad and add the extensions you need. Save restart the application and go.
+<img width="1906" height="442" alt="image" src="https://github.com/user-attachments/assets/00eeaa92-ac4b-45c0-8641-2bcaf1ca8c5a" />
