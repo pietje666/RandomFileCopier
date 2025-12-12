@@ -26,13 +26,19 @@ namespace RandomFileCopier.Logic
             FileInfo[] fis = directoryInfo.GetFiles();
             foreach (FileInfo fi in fis)
             {
-                size += fi.Length;
+                if (!IsInRecycleBin(fi.FullName))
+                {
+                    size += fi.Length;
+                }
             }
             // Add subdirectory sizes.
             DirectoryInfo[] dis = directoryInfo.GetDirectories();
             foreach (DirectoryInfo di in dis)
             {
-                size += CalculateDirSize(di);
+                if (!IsInRecycleBin(di.FullName))
+                {
+                    size += CalculateDirSize(di);
+                }
             }
             return size;
         }
