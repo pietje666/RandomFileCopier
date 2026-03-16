@@ -18,11 +18,7 @@ namespace RandomFileCopier.Logic.Base
 
         public int GetHashCode(CopyRepresenter obj)
         {
-            if (obj == null)
-            {
-                return 0;
-            }
-            return obj.Name.GetHashCode() ^ obj.Size.GetHashCode();
+            return obj == null ? 0 : obj.Name.GetHashCode() ^ obj.Size.GetHashCode();
         }
     }
 
@@ -68,7 +64,7 @@ namespace RandomFileCopier.Logic.Base
             return selectedSize;
         }
 
-        protected Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<T> files, long minimumFileSize, long maximumFileSize, long maximumSize, CancellationToken token, IEnumerable<MovedOrCopiedFile> copiedFileList, bool avoidDuplicates, params Func<T, bool>[] extraSelectors)
+        protected Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<T> files, FileSizeSelectionSettings fileSizeSelectionSettings, CancellationToken token, IEnumerable<MovedOrCopiedFile> copiedFileList, bool avoidDuplicates, params Func<T, bool>[] extraSelectors)
         {
             return Task.Run(() => { 
                 token.ThrowIfCancellationRequested();
@@ -76,21 +72,24 @@ namespace RandomFileCopier.Logic.Base
             
                 var filesCopy = orderedFiles.ToList();
                 var selectorsList = (extraSelectors ?? new Func<T, bool>[0]).ToList();
-                selectorsList.Add((x) => MinMaxSelector(minimumFileSize, maximumFileSize, x));
+                if (fileSizeSelectionSettings != null)
+                { 
+                    selectorsList.Add((x) => MinMaxSelector(fileSizeSelectionSettings.MinimumFileSize, fileSizeSelectionSettings.MaximumFileSize, x));                
+                }
 
                 if (copiedFileList != null && copiedFileList.Any())
                 {
                     selectorsList.Add(x => !copiedFileList.Any(y => y.Name == x.Name  && y.Size == x.Size));
                 }
                 //initial selection
-                var selectedSize = SelectFilesThatFit(maximumSize, orderedFiles.ToList(), token, selectorsList, action: x => filesCopy.Remove(x));
+                var selectedSize = SelectFilesThatFit(fileSizeSelectionSettings.MaximumSize, orderedFiles.ToList(), token, selectorsList, action: x => filesCopy.Remove(x));
                 if (avoidDuplicates)
                 {
                     filesCopy = filesCopy.Distinct<T>(_duplicateFileComparer).ToList();
                 }
                 var orderedFilesBySize = filesCopy.OrderBy(x => x.Size).ToList();
                 //reselect files this time ordered by size so the maximum amount of files are being selected
-                SelectFilesThatFit(maximumSize, orderedFilesBySize, token, selectorsList, selectedSize );
+                SelectFilesThatFit(fileSizeSelectionSettings.MaximumSize, orderedFilesBySize, token, selectorsList, selectedSize );
             });
         }
 

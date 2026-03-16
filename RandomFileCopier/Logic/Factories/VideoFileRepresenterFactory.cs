@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using RandomFileCopier.Helpers;
 using RandomFileCopier.Models;
 
 namespace RandomFileCopier.Logic
@@ -17,7 +18,9 @@ namespace RandomFileCopier.Logic
                 var subTitleSearchString = string.Format(CultureInfo.InvariantCulture, "{0}*.srt", Path.GetFileNameWithoutExtension(fileInfo.Name));
                 subTitlePaths = fileInfo.Directory.EnumerateFiles(subTitleSearchString).Select(y => y.FullName);
             }
-            return new VideoFileRepresenter(fileInfo.FullName, fileInfo.Name, fileInfo.Length , subTitlePaths);
+            var representer = new VideoFileRepresenter(fileInfo.FullName, fileInfo.Name, fileInfo.Length, subTitlePaths);
+            representer.DurationInSeconds = MediaDurationReader.GetDurationInSeconds(fileInfo.FullName);
+            return representer;
         }
     }
 }

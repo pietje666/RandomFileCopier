@@ -19,7 +19,7 @@ namespace RandomFileCopier.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -133,11 +133,38 @@ namespace RandomFileCopier.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cut.
+        /// </summary>
+        public static string Cut {
+            get {
+                return ResourceManager.GetString("Cut", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Include files where duration info is unavailable.
+        /// </summary>
+        public static string IncludeFilesWithoutDuration {
+            get {
+                return ResourceManager.GetString("IncludeFilesWithoutDuration", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Destination path.
         /// </summary>
         public static string DestinationPath {
             get {
                 return ResourceManager.GetString("DestinationPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duration.
+        /// </summary>
+        public static string DurationInMinutes {
+            get {
+                return ResourceManager.GetString("DurationInMinutes", resourceCulture);
             }
         }
         
@@ -246,6 +273,15 @@ namespace RandomFileCopier.Properties {
         public static string MinimumFileSize {
             get {
                 return ResourceManager.GetString("MinimumFileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to min.
+        /// </summary>
+        public static string Minutes {
+            get {
+                return ResourceManager.GetString("Minutes", resourceCulture);
             }
         }
         

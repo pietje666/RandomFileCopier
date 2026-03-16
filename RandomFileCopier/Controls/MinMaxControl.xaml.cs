@@ -21,6 +21,8 @@ namespace RandomFileCopier.Controls
         public static readonly DependencyProperty MinValueProperty = DependencyProperty.Register("MinValue", typeof(double), typeof(MinMaxControl), new FrameworkPropertyMetadata(null, MinCoerceCheck) { BindsTwoWayByDefault = true, DefaultUpdateSourceTrigger = System.Windows.Data.UpdateSourceTrigger.PropertyChanged });
         public static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(double), typeof(MinMaxControl), new FrameworkPropertyMetadata(null, MaxCoerceCheck) { BindsTwoWayByDefault = true, DefaultUpdateSourceTrigger = System.Windows.Data.UpdateSourceTrigger.PropertyChanged });
         public static readonly DependencyProperty MaxSliderValueProperty = DependencyProperty.Register("MaxSliderValue", typeof(int), typeof(MinMaxControl), new FrameworkPropertyMetadata(0));
+        public static readonly DependencyProperty TickFrequencyProperty = DependencyProperty.Register("TickFrequency", typeof(double), typeof(MinMaxControl), new FrameworkPropertyMetadata(0.1));
+        public static readonly DependencyProperty IncrementProperty = DependencyProperty.Register("Increment", typeof(double), typeof(MinMaxControl), new FrameworkPropertyMetadata(0.1));
         private bool _dragStarted;
 
         private static object MinCoerceCheck(DependencyObject d, object baseValue)
@@ -50,6 +52,18 @@ namespace RandomFileCopier.Controls
         {
             get { return (int)GetValue(MaxSliderValueProperty); }
             set { SetValue(MaxSliderValueProperty, value); }
+        }
+
+        public double TickFrequency
+        {
+            get { return (double)GetValue(TickFrequencyProperty); }
+            set { SetValue(TickFrequencyProperty, value); }
+        }
+
+        public double Increment
+        {
+            get { return (double)GetValue(IncrementProperty); }
+            set { SetValue(IncrementProperty, value); }
         }
 
         public double MinValue
