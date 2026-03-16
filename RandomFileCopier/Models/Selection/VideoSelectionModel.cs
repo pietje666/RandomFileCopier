@@ -3,12 +3,12 @@
 namespace RandomFileCopier.Models.Selection
 {
     class VideoSelectionModel
-        : SelectionModel
+        : MediaSelectionModel
     {
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public VideoSelectionModel(double minimumFileSize, double maximumFileSize)
-            : base(minimumFileSize, maximumFileSize, UnitSize.GB)
+            : base(minimumFileSize, maximumFileSize, UnitSize.GB, 0, 180)
         {
             
         }

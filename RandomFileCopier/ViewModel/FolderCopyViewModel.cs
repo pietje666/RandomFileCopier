@@ -56,12 +56,19 @@ namespace RandomFileCopier.ViewModel
                 }
             }
             var copiedFileList = GetFileListOrNullIfNotApplicable();
-            await SelectRandomFilesAsync(Model.Items, copiedFileList, token);
+            await SelectRandomFilesAsync(Model.Items.ToList(), copiedFileList.ToList(), token);
         }
 
-        protected override Task SelectRandomFilesAsync(IEnumerable<CopyRepresenter> copyRepresenterList, IEnumerable<MovedOrCopiedFile> copiedFileList, CancellationToken token)
+        protected override Task SelectRandomFilesAsync(List<CopyRepresenter> copyRepresenterList, List<MovedOrCopiedFile> copiedFileList, CancellationToken token)
         {
-           return _folderSelector.SelectMaximumAmountOfRandomFoldersAsync(copyRepresenterList, SelectionModel.MinimumFileSizeInBytes, SelectionModel.MaximumFileSizeInBytes ,SelectionModel.SelectedSizeInBytes, copiedFileList, SelectionModel.AvoidDuplicates, token);
+            var selectionSettings = new FileSizeSelectionSettings()
+            {
+                MaximumFileSize = SelectionModel.MaximumFileSizeInBytes,
+                MinimumFileSize = SelectionModel.MinimumFileSizeInBytes,
+                MaximumSize = SelectionModel.SelectedSizeInBytes,
+                
+            };
+            return _folderSelector.SelectMaximumAmountOfRandomFoldersAsync(copyRepresenterList, selectionSettings, copiedFileList, SelectionModel.AvoidDuplicates, token);
         }
 
         protected override Task<IListWithErrorDictionary<MovedOrCopiedFile>> CopySpecificAsync(CancellationToken token)

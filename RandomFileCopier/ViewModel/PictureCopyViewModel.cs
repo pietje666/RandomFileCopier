@@ -41,9 +41,16 @@ namespace RandomFileCopier.ViewModel
             return new CopyRepresenter(fileInfo.FullName, fileInfo.Name, fileInfo.Length);
         }
 
-        protected override Task SelectRandomFilesAsync(IEnumerable<CopyRepresenter> filesList, IEnumerable<MovedOrCopiedFile> copiedFileList, CancellationToken token)
+        protected override Task SelectRandomFilesAsync(List<CopyRepresenter> filesList, List<MovedOrCopiedFile> copiedFileList, CancellationToken token)
         {
-            return _randomPictureFileSelector.SelectMaximumAmountOfRandomFilesAsync(filesList, SelectionModel.MinimumFileSizeInBytes, SelectionModel.MaximumFileSizeInBytes, SelectionModel.SelectedSizeInBytes, copiedFileList, SelectionModel.AvoidDuplicates, token);
+            var selectionSettings = new FileSizeSelectionSettings()
+            {
+                MaximumSize = SelectionModel.SelectedSizeInBytes,
+                MinimumFileSize = SelectionModel.MinimumFileSizeInBytes,
+                MaximumFileSize = SelectionModel.MaximumFileSizeInBytes
+
+            };
+            return _randomPictureFileSelector.SelectMaximumAmountOfRandomFilesAsync(filesList, selectionSettings, copiedFileList, SelectionModel.AvoidDuplicates, token);
         }
 
         public ObservableCollection<string> PictureExtensions { get; set; }

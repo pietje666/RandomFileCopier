@@ -40,7 +40,7 @@ namespace RandomFileCopier.ViewModel.Base
 
             var copiedFileList = GetFileListOrNullIfNotApplicable();
 
-            await SelectRandomFilesAsync(Model.Items, copiedFileList, token);
+            await SelectRandomFilesAsync(Model.Items.ToList(), copiedFileList, token);
         }
 
         protected abstract TCopyRepresenter CreateFileRepresenter(FileInfo fileInfo);

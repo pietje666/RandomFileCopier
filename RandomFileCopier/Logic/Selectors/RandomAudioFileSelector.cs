@@ -1,17 +1,35 @@
-﻿using System.Collections.Generic;
+﻿using RandomFileCopier.Logic.Base;
+using RandomFileCopier.Models;
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using RandomFileCopier.Logic.Base;
-using RandomFileCopier.Models;
 
 namespace RandomFileCopier.Logic
 {
     class RandomAudioFileSelector
         : RandomFileSelectorBase<CopyRepresenter>, IRandomAudioFileSelector
     {
-        public Task SelectMaximumAmountOfRandomFilesAsync(IEnumerable<CopyRepresenter> files, long minimumFileSize, long maximumFileSize, long maximumSize, IEnumerable<MovedOrCopiedFile> copiedFileList, bool avoidDuplicates,  CancellationToken cancellationToken)
+
+        public Task SelectMaximumAmountOfRandomFilesAsync(RandomAudioSelectionSettings randomAudioSelectionSettings, CancellationToken token)
         {
-           return SelectMaximumAmountOfRandomFilesAsync(files, minimumFileSize, maximumFileSize, maximumSize, cancellationToken, copiedFileList, avoidDuplicates);
+            var extraSelectors = new List<Func<CopyRepresenter, bool>>();
+
+            if(randomAudioSelectionSettings.DurationSelectionSettings != null)
+            {
+                var durationSettings = randomAudioSelectionSettings.DurationSelectionSettings;
+                extraSelectors.Add((file) =>
+                    !file.DurationInSeconds.HasValue
+                        ? durationSettings.IncludeFilesWithoutDuration
+                        : file.DurationInSeconds.Value >= durationSettings.MinimumDuration && file.DurationInSeconds.Value <= durationSettings.MaximumDuration);
+            }
+
+            return SelectMaximumAmountOfRandomFilesAsync(randomAudioSelectionSettings.Files,
+                                                        randomAudioSelectionSettings.FileSizeSelectionSettings,
+                                                        token,
+                                                        randomAudioSelectionSettings.CopiedFileList,
+                                                        randomAudioSelectionSettings.AvoidDuplicates,
+                                                        extraSelectors.ToArray());
         }
     }
 }

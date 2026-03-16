@@ -129,6 +129,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancelar</value>
   </data>
+  <data name="DestinationPath" xml:space="preserve">
+    <value>Destinacíon</value>
+  </data>
   <data name="FindFiles" xml:space="preserve">
     <value>Buscar</value>
   </data>
@@ -201,6 +204,9 @@
   <data name="ProcessingFiles" xml:space="preserve">
     <value>Copiado {0}/{1}</value>
   </data>
+  <data name="ProcessingMoveFiles" xml:space="preserve">
+    <value>Moviando {0}/{1}</value>
+  </data>
   <data name="OpenFolder" xml:space="preserve">
     <value>Abrir carpeta en Explorador de archivos</value>
   </data>
@@ -224,6 +230,12 @@
   </data>
   <data name="MB" xml:space="preserve">
     <value>MB</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="DurationInMinutes" xml:space="preserve">
+    <value>Duración</value>
   </data>
   <data name="AvoidPreviousCopied" xml:space="preserve">
     <value>Evitar archivos previamente copiados</value>
@@ -255,22 +267,22 @@
   <data name="Copy" xml:space="preserve">
     <value>Copiar</value>
   </data>
-  <data name="Cut" xml:space="preserve">
-    <value>Cortar</value>
+  <data name="Move" xml:space="preserve">
+    <value>Mueve</value>
   </data>
   <data name="CopyOrMoveOptions" xml:space="preserve">
     <value>Opciones de movar o copiar</value>
   </data>
-  <data name="Start Move" xml:space="preserve">
+  <data name="StartMove" xml:space="preserve">
     <value>Movar</value>
   </data>
   <data name="SomeFilesHaveNotBeenMoved" xml:space="preserve">
     <value>Algunos archivos no han sido moviados! Asegúrese que el equipo no haya sido removido y que el programa se ejecute con los permisos correctos.</value>
   </data>
-  <data name="SuccessMoved" xml:space="preserve">
+  <data name="SuccessMove" xml:space="preserve">
     <value>Todos los archivos han sido satisfactoriamente moviados!</value>
   </data>
-  <data name="ProcessingMoveFiles" xml:space="preserve">
-    <value>Moviando {0}/{1}</value>
+  <data name="Cut" xml:space="preserve">
+    <value>Cortar</value>
   </data>
 </root>

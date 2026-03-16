@@ -100,6 +100,7 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn IsReadOnly="True" Width="10*" Header="{x:Static resx:Resources.SizeInMB}" Binding="{Binding SizeInMB, StringFormat={}{0:F2}}"/>
                                         <DataGridTextColumn IsReadOnly="True" Width="10*" Header="{x:Static resx:Resources.SizeInGB}" Binding="{Binding SizeInGB, StringFormat={}{0:F2}}" />
+                                        <DataGridTextColumn IsReadOnly="True" Width="10*" Header="{x:Static resx:Resources.DurationInMinutes}" Binding="{Binding DurationFormatted}"/>
                                         <DataGridTextColumn IsReadOnly="True" Width="25*" Header="{x:Static resx:Resources.SubtitlePath}" Binding="{Binding SubtitlePath}"/>
                                     </DataGrid.Columns>
                                 </controls:CopyDataGrid>
@@ -114,6 +115,7 @@
                                 <controls:CopyDataGrid ItemsSource="{Binding CollectionViewSourceItems, Mode=OneWay}" Grid.Row="0">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn IsReadOnly="True" Width="10*" Header="{x:Static resx:Resources.SizeInMB}" Binding="{Binding SizeInMB, StringFormat={}{0:F2}}"/>
+                                        <DataGridTextColumn IsReadOnly="True" Width="10*" Header="{x:Static resx:Resources.DurationInMinutes}" Binding="{Binding DurationFormatted}"/>
                                     </DataGrid.Columns>
                                 </controls:CopyDataGrid>
                             </DataTemplate>
@@ -157,7 +159,7 @@
                             <DataTemplate>
                                 <StackPanel>
                                     <Expander Header="{x:Static resx:Resources.SearchOptions}">
-                                    <StackPanel>
+                                        <StackPanel>
                                             <extendedToolkit:CheckComboBox SelectedItemsOverride="{Binding Model.SelectedExtensions, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding VideoExtensions}"/>
                                             <CheckBox Content="{x:Static resx:Resources.IncludeSubtitles}" IsChecked="{Binding Model.IncludeSubtitles}"/>
                                             <CheckBox Content="{x:Static resx:Resources.SearchSubDirectories}" IsChecked="{Binding Model.IncludeSubDirectories}"/>
@@ -168,7 +170,15 @@
                                             <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.OnlyVideosWithSubtitles}" IsChecked="{Binding SelectionModel.VideosWithSubtitlesOnly}"/>
                                             <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.AvoidPreviousCopied}" IsChecked="{Binding SelectionModel.AvoidPreviousCopied}" ToolTip="{x:Static resx:Resources.AvoidPreviousCopiedTooltip}"/>
                                             <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.RemoveDuplicates}" IsChecked="{Binding SelectionModel.AvoidDuplicates}"/>
-                                            <controls:MinMaxControl Command="{Binding RefreshSelectionCommand}" MinValue="{Binding SelectionModel.MinimumFileSize}" MaxValue="{Binding SelectionModel.MaximumFileSize}" SizeUnit="{x:Static resx:Resources.GB}" MaxSliderValue="10"/>
+                                            <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.IncludeFilesWithoutDuration}" IsChecked="{Binding SelectionModel.IncludeFilesWithoutDuration}"/>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    <ColumnDefinition Width="*" ></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <controls:MinMaxControl Grid.Column="0" Command="{Binding RefreshSelectionCommand}" MinValue="{Binding SelectionModel.MinimumFileSize}" MaxValue="{Binding SelectionModel.MaximumFileSize}" SizeUnit="{x:Static resx:Resources.GB}" MaxSliderValue="50"/>
+                                                <controls:MinMaxControl Grid.Column="1" Command="{Binding RefreshSelectionCommand}" MinValue="{Binding SelectionModel.MinimumDuration}" MaxValue="{Binding SelectionModel.MaximumDuration}" SizeUnit="{x:Static resx:Resources.Minutes}" MaxSliderValue="300" TickFrequency="1" Increment="1"/>
+                                            </Grid>
                                         </StackPanel>
                                     </Expander>
                                     <Expander Header="{x:Static resx:Resources.CopyOrMoveOptions}">
@@ -197,7 +207,15 @@
                                         <StackPanel>
                                             <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.AvoidPreviousCopied}" IsChecked="{Binding SelectionModel.AvoidPreviousCopied}" ToolTip="{x:Static resx:Resources.AvoidPreviousCopiedTooltip}"/>
                                             <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.RemoveDuplicates}" IsChecked="{Binding SelectionModel.AvoidDuplicates}"/>
-                                            <controls:MinMaxControl  Command="{Binding RefreshSelectionCommand}" MinValue="{Binding SelectionModel.MinimumFileSize}" MaxValue="{Binding SelectionModel.MaximumFileSize}" SizeUnit="{x:Static resx:Resources.MB}" MaxSliderValue="350"/>
+                                            <CheckBox Command="{Binding RefreshSelectionCommand}" Content="{x:Static resx:Resources.IncludeFilesWithoutDuration}" IsChecked="{Binding SelectionModel.IncludeFilesWithoutDuration}"/>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" ></ColumnDefinition>
+                                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <controls:MinMaxControl Grid.Column="0"  Command="{Binding RefreshSelectionCommand}" MinValue="{Binding SelectionModel.MinimumFileSize}" MaxValue="{Binding SelectionModel.MaximumFileSize}" SizeUnit="{x:Static resx:Resources.MB}" MaxSliderValue="700"/>
+                                                <controls:MinMaxControl Grid.Column="1"  Command="{Binding RefreshSelectionCommand}" MinValue="{Binding SelectionModel.MinimumDuration}" MaxValue="{Binding SelectionModel.MaximumDuration}" SizeUnit="{x:Static resx:Resources.Minutes}" MaxSliderValue="120" TickFrequency="1" Increment="1"/>
+                                            </Grid>
                                         </StackPanel>
                                     </Expander>
                                     <Expander Header="{x:Static resx:Resources.CopyOrMoveOptions}">
@@ -310,7 +328,7 @@
         </Grid>
         <!--Destination-->
         <Grid Grid.Row="1" IsEnabled="{Binding IsEnabled, ElementName=SourceGrid}"  >
-            
+
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -327,7 +345,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Slider Margin="0 5 0 0"  Value="{Binding SelectionModel.SelectedSize, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, ValidatesOnNotifyDataErrors=False}" Grid.Column="0" IsSnapToTickEnabled="True" TickFrequency="0.1" Minimum="0.1" Maximum="{Binding Model.MaxDestinationSize, UpdateSourceTrigger=PropertyChanged}">
-                            
+
                             <i:Interaction.Triggers>
                                 <helpers:RoutedEventTrigger RoutedEvent="Thumb.DragCompleted">
                                     <light:EventToCommand Command="{Binding Mode=OneWay, Path=SliderDragCompletedCommand}"/>

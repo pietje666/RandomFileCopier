@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using RandomFileCopier.Dialogs;
+using RandomFileCopier.Helpers;
+using RandomFileCopier.Logic;
+using RandomFileCopier.Logic.Helper;
+using RandomFileCopier.Logic.Selectors.Models;
+using RandomFileCopier.Models;
+using RandomFileCopier.Models.Selection;
+using RandomFileCopier.ViewModel.Base;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using RandomFileCopier.Dialogs;
-using RandomFileCopier.Helpers;
-using RandomFileCopier.Logic;
-using RandomFileCopier.Logic.Helper;
-using RandomFileCopier.Models;
-using RandomFileCopier.Models.Selection;
-using RandomFileCopier.ViewModel.Base;
 
 namespace RandomFileCopier.ViewModel
 {
@@ -81,15 +82,36 @@ namespace RandomFileCopier.ViewModel
         }
 
 
-
         protected override VideoFileRepresenter CreateFileRepresenter(FileInfo fileInfo)
         {
             return _fileRepresenterFactory.CreateVideoFileRepresenter(fileInfo, Model.IncludeSubtitles);
         }
 
-        protected override Task SelectRandomFilesAsync(IEnumerable<VideoFileRepresenter> copyRepresenter, IEnumerable<MovedOrCopiedFile> copiedFileList,  CancellationToken token)
+        protected override Task SelectRandomFilesAsync(List<VideoFileRepresenter> copyRepresenter, List<MovedOrCopiedFile> copiedFileList,  CancellationToken token)
         {
-            return _randomFileSelector.SelectMaximumAmountOfRandomFilesAsync(copyRepresenter,SelectionModel.MinimumFileSizeInBytes, SelectionModel.MaximumFileSizeInBytes, SelectionModel.SelectedSizeInBytes, SelectionModel.VideosWithSubtitlesOnly, copiedFileList, SelectionModel.AvoidDuplicates, token );
+            var selectionSettings = new RandomVideoSelectionSettings()
+            {
+                DurationSelectionSettings = new DurationSelectionSettings()
+                {
+                    MinimumDuration = SelectionModel.MinimumDurationInSeconds,
+                    MaximumDuration = SelectionModel.MaximumDurationInSeconds,
+                    IncludeFilesWithoutDuration = SelectionModel.IncludeFilesWithoutDuration
+                },
+                FileSizeSelectionSettings = new FileSizeSelectionSettings()
+                {
+
+                    MaximumSize = SelectionModel.SelectedSizeInBytes,
+                    MinimumFileSize = SelectionModel.MinimumFileSizeInBytes,
+                    MaximumFileSize = SelectionModel.MaximumFileSizeInBytes
+                },
+                AvoidDuplicates = SelectionModel.AvoidDuplicates,
+                CopiedFilesList = copiedFileList,
+                Files = copyRepresenter,
+                VideosWithSubtitlesOnly = SelectionModel.VideosWithSubtitlesOnly                
+
+            };
+
+            return _randomFileSelector.SelectMaximumAmountOfRandomFilesAsync(selectionSettings, token );
         }
 
         public ObservableCollection<string> VideoExtensions { get; set; }

@@ -73,7 +73,7 @@ namespace RandomFileCopier.ViewModel.Base
             SliderDragStartedCommand = new RelayCommand(SliderDragStartedHandler);
             SliderValueChangedCommand = new RelayCommand(SliderValueChangedHandler);
             OpenFolderCommand = new RelayCommand(() => _openerHelper.OpenFolderHandler(SelectedItem), () => SelectedItem != null);
-            RefreshSelectionCommand = new RelayCommand(() => ReSelectRandomFiles(Model.Items));
+            RefreshSelectionCommand = new RelayCommand(() => ReSelectRandomFiles(Model.Items.ToList()));
         }
         
         public RelayCommand BrowseSourceCommand { get; private set; }
@@ -93,16 +93,16 @@ namespace RandomFileCopier.ViewModel.Base
         public RelayCommand SliderLoadedCommand { get; private set; }
         public RelayCommand SliderUnloadedCommand { get; private set; }
 
-        protected abstract Task SelectRandomFilesAsync(IEnumerable<TCopyRepresenter> copyRepresenterList, IEnumerable<MovedOrCopiedFile> copiedFileList, CancellationToken token);
+        protected abstract Task SelectRandomFilesAsync(List<TCopyRepresenter> copyRepresenterList, List<MovedOrCopiedFile> copiedFileList, CancellationToken token);
         protected abstract Task SpecificSearchAsync(string path, CancellationToken token);
         protected abstract Task<IListWithErrorDictionary<MovedOrCopiedFile>> MoveSpecificAsync(CancellationToken token);
         protected abstract Task<IListWithErrorDictionary<MovedOrCopiedFile>> CopySpecificAsync(CancellationToken token);
 
         protected virtual void OnSelectionModelPropertyChanged(object sender, PropertyChangedEventArgs e) { }
 
-        protected IEnumerable<MovedOrCopiedFile> GetFileListOrNullIfNotApplicable()
+        protected List<MovedOrCopiedFile> GetFileListOrNullIfNotApplicable()
         {
-            IEnumerable<MovedOrCopiedFile> copiedFileList = null;
+            List<MovedOrCopiedFile> copiedFileList = null;
 
             if (SelectionModel.AvoidPreviousCopied)
             {
@@ -131,7 +131,7 @@ namespace RandomFileCopier.ViewModel.Base
             }
         }
 
-        private async void ReSelectRandomFiles(IEnumerable<TCopyRepresenter> copyRepresenterList)
+        private async void ReSelectRandomFiles(List<TCopyRepresenter> copyRepresenterList)
         {
             try
             {
@@ -263,7 +263,7 @@ namespace RandomFileCopier.ViewModel.Base
 
         private void SliderDragCompletedHandler()
         {
-            ReSelectRandomFiles(Model.Items);
+            ReSelectRandomFiles(Model.Items.ToList());
             _dragStarted = false;
         }
 
@@ -277,7 +277,7 @@ namespace RandomFileCopier.ViewModel.Base
         {
             if (!_dragStarted && _isSliderLoaded)
             {
-                ReSelectRandomFiles(Model.Items);
+                ReSelectRandomFiles(Model.Items.ToList());
             }
         }
 
@@ -404,7 +404,7 @@ namespace RandomFileCopier.ViewModel.Base
         public CopyRepresenter SelectedItem { get; set; }
         public ICollectionView CollectionViewSourceItems { get; private set; }
         public IDispatcherWrapper Dispatcher { get; private set; }
-        public IEnumerable<MovedOrCopiedFile> PreviouslyCopiedFileList { get; private set; }
+        public List<MovedOrCopiedFile> PreviouslyCopiedFileList { get; private set; }
 
         public int SelectedFilesCount
         {
@@ -487,8 +487,8 @@ namespace RandomFileCopier.ViewModel.Base
                 }
                 else
                 {
-                    Model.SourcePath = @"D:\Downloads\films";
-                    Model.DestinationPath = @"c:\test";
+                    Model.SourcePath = @"C:\Downloads\LinuxShare";
+                    Model.DestinationPath = @"c:\Downloads";
                 }
 #endif
             }

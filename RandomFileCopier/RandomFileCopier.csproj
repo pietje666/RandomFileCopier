@@ -133,6 +133,7 @@
     <Compile Include="Helpers\DispatcherWrapper.cs" />
     <Compile Include="Helpers\Extension.cs" />
     <Compile Include="Helpers\IConfigurationHelper.cs" />
+    <Compile Include="Helpers\MediaDurationReader.cs" />
     <Compile Include="Helpers\NativeMethods.cs" />
     <Compile Include="Helpers\IDispatcherWrapper.cs" />
     <Compile Include="Dialogs\IDialogService.cs" />
@@ -148,11 +149,15 @@
     <Compile Include="Logic\Helper\OpenerHelper.cs" />
     <Compile Include="Logic\Searchers\FolderSearcher.cs" />
     <Compile Include="Logic\Searchers\IFolderSearcher.cs" />
+    <Compile Include="Logic\Selectors\Models\DurationSelectionSettings.cs" />
+    <Compile Include="Logic\Selectors\Models\FileSizeSelectionSettings.cs" />
     <Compile Include="Logic\Selectors\IRandomAudioFileSelector.cs" />
     <Compile Include="Logic\Selectors\IRandomFolderSelector.cs" />
     <Compile Include="Logic\Selectors\IRandomPictureFileSelector.cs" />
     <Compile Include="Logic\Selectors\IRandomVideoFileSelector.cs" />
+    <Compile Include="Logic\Selectors\Models\RandomVideoSelectionSettings.cs" />
     <Compile Include="Logic\Selectors\RandomAudioFileSelector.cs" />
+    <Compile Include="Logic\Selectors\Models\RandomAudioSelectionSettings.cs" />
     <Compile Include="Logic\Selectors\RandomFolderSelector.cs" />
     <Compile Include="Logic\Factories\VideoFileRepresenterFactory.cs" />
     <Compile Include="Logic\Searchers\FileSearcher.cs" />
@@ -169,6 +174,8 @@
     <Compile Include="Models\Base\SourceDestinationModel.cs" />
     <Compile Include="Models\CopyRepresenter.cs" />
     <Compile Include="Models\PictureSourceDestinationModel.cs" />
+    <Compile Include="Models\Selection\AudioSelectionModel.cs" />
+    <Compile Include="Models\Selection\MediaSelectionModel.cs" />
     <Compile Include="Models\Selection\SelectionModel.cs" />
     <Compile Include="Models\Selection\VideoSelectionModel.cs" />
     <Compile Include="Models\VideoFileRepresenter.cs" />
@@ -262,6 +269,7 @@
   <ItemGroup>
     <Resource Include="video.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--<Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' == ''" />
