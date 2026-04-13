@@ -22,12 +22,12 @@ namespace RandomFileCopier.Logic
             }
 
             if (randomVideoSelectionSettings.DurationSelectionSettings != null)
-            {
+            {                   
                 var durationSettings = randomVideoSelectionSettings.DurationSelectionSettings;
                 extraSelectors.Add((file) =>
-                    !file.DurationInSeconds.HasValue
-                        ? durationSettings.IncludeFilesWithoutDuration
-                        : file.DurationInSeconds.Value >= durationSettings.MinimumDuration && file.DurationInSeconds.Value <= durationSettings.MaximumDuration);
+                    durationSettings.IncludeFilesWithoutDuration
+                        ? file.DurationInSeconds == null || (file.DurationInSeconds.Value >= durationSettings.MinimumDuration && file.DurationInSeconds.Value <= durationSettings.MaximumDuration)
+                        : file.DurationInSeconds.HasValue && file.DurationInSeconds.Value >= durationSettings.MinimumDuration && file.DurationInSeconds.Value <= durationSettings.MaximumDuration);
             }
 
             return SelectMaximumAmountOfRandomFilesAsync(randomVideoSelectionSettings.Files,
@@ -37,6 +37,6 @@ namespace RandomFileCopier.Logic
                                                          randomVideoSelectionSettings.AvoidDuplicates,
                                                          extraSelectors.ToArray());
 
-        }
+        }   
     }
 }
