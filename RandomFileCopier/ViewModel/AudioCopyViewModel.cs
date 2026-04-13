@@ -55,13 +55,13 @@ namespace RandomFileCopier.ViewModel
                 FileSizeSelectionSettings = new FileSizeSelectionSettings()
                 {
                     MaximumFileSize = SelectionModel.MaximumFileSizeInBytes,
-                    MaximumSize = SelectionModel.MaximumFileSizeInBytes,
+                    MaximumSize = SelectionModel.SelectedSizeInBytes,
                     MinimumFileSize = SelectionModel.MinimumFileSizeInBytes
                 },
                 DurationSelectionSettings = new DurationSelectionSettings()
                 {
-                    MaximumDuration = SelectionModel.MaximumDuration,
-                    MinimumDuration = SelectionModel.MinimumDuration,
+                    MaximumDuration = SelectionModel.MaximumDurationInSeconds,
+                    MinimumDuration = SelectionModel.MinimumDurationInSeconds,
                     IncludeFilesWithoutDuration = SelectionModel.IncludeFilesWithoutDuration
                 }
             };
